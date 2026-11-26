@@ -2,6 +2,7 @@ name: Release
 
 # Run this from the Actions tab ("Run workflow") to publish a release.
 # It reads the version from manifest.json, builds Rubi-v<version>.zip and creates the v<version> tag and release.
+# The zip has manifest.json at its root, so the same file can be uploaded to the Chrome Web Store.
 on:
   workflow_dispatch:
 
@@ -20,7 +21,7 @@ jobs:
 
       - name: Build zip
         run: |
-          git archive --prefix=Rubi/ -o "Rubi-v${{ steps.v.outputs.version }}.zip" HEAD -- . ':!docs' ':!.github' ':!tests' ':!package.json'
+          git archive -o "Rubi-v${{ steps.v.outputs.version }}.zip" HEAD -- . ':!docs' ':!.github' ':!tests' ':!package.json'
           sed "s/{VERSION}/${{ steps.v.outputs.version }}/g" .github/release-notes.md > notes.md
 
       - name: Publish release

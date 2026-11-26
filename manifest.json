@@ -56,7 +56,6 @@
       "https://www.googleapis.com/auth/drive.appdata"
     ]
   },
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm1GpXwqGDp3xSBS1vgN/IM7tOY7Wjo0jnEtDyK2BdPAX6oybonk/BBn8HfTrjyBsf+ZR3O3xal8/lPkdkMnWf69mw9IxJVd7aI+pm3LpWX22N+BuyIGKBIda0/pPH9aF+aQScs9Z9mHA9L3AxoZ55jDuiRhHu0LNDAPPFLNXVFKnahUd0XW+p7ABVdkFBbFa9Yso+SQdEAVettvTr7xae98InK5ZHSsXwaQ4DBBhKQeODSCf4RvQGCgxIdzImCwsoLUtc44G9W6GIafNwCGmMbHNQ537k+Iwd2Q+O709ZykC4DRcVavs2P7+/uQ4Ts2bH8OdME62YFflKH842BBeVQIDAQAB",
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://www.googleapis.com https://oauth2.googleapis.com https://api.open-meteo.com https://geocoding-api.open-meteo.com https://api.frankfurter.app https://open.er-api.com https://api.coingecko.com https://api.navasan.tech https://query1.finance.yahoo.com https://query2.finance.yahoo.com https://api.audd.io https://api.github.com https://air-quality-api.open-meteo.com https://www.thesportsdb.com https://translate.googleapis.com"
   },

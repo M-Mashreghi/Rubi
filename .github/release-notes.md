@@ -14,6 +14,7 @@ The first public release of Rubi, a personal new-tab page for Chrome with no ads
 راهنمای کامل و انتقال از دستیار در [README](https://github.com/M-Mashreghi/Rubi#نصب) است. Full guide and Dastyar import: [README](https://github.com/M-Mashreghi/Rubi#install).
 
 ### تازه‌های این نسخه · New in this version
+- **۴.۱.۱** — فایل zip حالا مستقیم برای Chrome Web Store آماده است (manifest در ریشه، بدون key) · The release zip is ready for the Chrome Web Store
 - **۴.۱.۱** — دکمه‌های آبی روی باکس‌های شفاف شفاف‌تر شدند، با یک لبه‌ی نازک تا دیده شوند · Accent buttons are more see-through, with a thin edge
 - **۴.۱.۰** — پوسته‌ی شیشه‌ای؛ ده فونت لاتین تازه (Roboto، Open Sans، Montserrat، Poppins، Lato، Nunito، EB Garamond، Playfair Display، Fira Sans، Jost)؛ نوار بالای سرویس‌ها و دکمه‌های آبی هم با شفافیت کم‌رنگ می‌شوند · Glass theme, ten new Latin fonts, and the services header and blue buttons now follow box opacity
 - **۴.۰.۱** — باکس شمارش معکوس هم مثل بقیه دکمه‌ی ✕ دارد و از 🧩 باکس‌ها و قابلیت‌ها دوباره روشن می‌شود · The countdown box can be hidden with ✕ again
