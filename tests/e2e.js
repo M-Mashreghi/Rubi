@@ -288,6 +288,12 @@ function i18nParity() {
 	});
 	check("the daily and countdown boxes can be hidden with ✕ and turned back on", boxes.every(Boolean), boxes);
 
+	console.log("Fonts and glass theme");
+	const fonts = await page.evaluate(async () => { const r = []; for (const [, fam] of Themes.FONT_LIST.filter(([id]) => ["roboto", "garamond", "fira", "jost"].includes(id))) { const f = fam.split(",")[0]; await document.fonts.load(`16px ${f}`, "Grüße Été"); r.push(document.fonts.check(`16px ${f}`, "Grüße Été")); } return r; });
+	check("English, French and German fonts are bundled", fonts.length === 4 && fonts.every(Boolean), fonts);
+	const glass = await page.evaluate(async () => { Store.setSetting("theme", "glass"); await new Promise((r) => setTimeout(r, 300)); const on = document.documentElement.classList.contains("theme-glass"); Store.setSetting("theme", "dark"); await new Promise((r) => setTimeout(r, 300)); return [on, !document.documentElement.classList.contains("theme-glass")]; });
+	check("glass theme switches on and off", glass.every(Boolean), glass);
+
 	console.log("Site flag");
 	const geo = await sw.evaluate(async () => Promise.all(["8.8.8.8", "2.144.0.1", "2a01:4f8::1", "::ffff:8.8.4.4", "192.168.1.1"].map((ip) => KamyarFlag.countryOf(ip))));
 	check("server addresses map to countries inside the extension", geo.join(",") === "US,IR,DE,US,", geo);

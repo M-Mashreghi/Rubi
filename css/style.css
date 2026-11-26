@@ -1602,3 +1602,39 @@ html.has-wall:is(.ink-light, .ink-dark) :is(.card, .panel, .widget, .rail, .sear
 	--s2-glass-h: color-mix(in srgb, var(--s2-solid) var(--box-ah, 85%), transparent);
 }
 html.has-wall:is(.ink-light, .ink-dark) .tiles .bm { --surface: var(--s1-solid); --surface-2: var(--s2-solid); }
+
+/* v4.1: the services header follows box opacity like every other box */
+html.has-wall .apps-head { background: color-mix(in srgb, var(--s1-solid) var(--box-a, 60%), transparent); backdrop-filter: blur(var(--box-blur, 14px)); -webkit-backdrop-filter: blur(var(--box-blur, 14px)); }
+html.has-wall .apps-head:hover { background: color-mix(in srgb, var(--s1-solid) var(--box-ah, 85%), transparent); }
+html.has-wall .apps-head > * { --surface: var(--s1-glass); --surface-2: var(--s2-glass); }
+html.has-wall .apps-head .apps-chip { background: var(--s2-glass); }
+html.has-wall.ink-light .apps-head { --text: #f4f5f8; --muted: rgb(236 238 244 / .74); --border: rgb(255 255 255 / .16); --s1-solid: #26272c; --s2-solid: #303137; color: var(--text); }
+html.has-wall.ink-dark .apps-head { --text: #161b26; --muted: rgb(22 27 38 / .7); --border: rgb(0 0 0 / .12); --s1-solid: #fff; --s2-solid: #f1f3f8; color: var(--text); }
+
+/* v4.1: blue (accent) buttons on see-through boxes are see-through too, a little more solid than the box so they still stand out */
+html.has-wall {
+	--accent-glass: color-mix(in srgb, var(--accent) calc(var(--box-a, 60%) * 0.55 + 40%), transparent);
+	--accent-glass-h: color-mix(in srgb, var(--accent) calc(var(--box-ah, 85%) * 0.4 + 60%), transparent);
+}
+html.has-wall :is(.card, .panel, .widget, .rail, .search-card, .side-panel, .apps-head, .tools-bar, .tiles) :is(.btn:not(.btn-ghost):not(.btn-danger), .search-go, .side-tab.active[data-side="todo"], .daily-tab.active, .snd-play, .snd-preset.active, .svc-tab.on, .apps-chip.svc-manage, .bday-chip.on, .app-add),
+html.has-wall :is(.card, .widget) .cal-day.today {
+	background: var(--accent-glass); border-color: transparent; backdrop-filter: blur(6px);
+}
+html.has-wall :is(.card, .panel, .widget, .rail, .search-card, .side-panel, .apps-head, .tools-bar, .tiles) :is(.btn:not(.btn-ghost):not(.btn-danger), .search-go, .snd-play):hover { background: var(--accent-glass-h); }
+html.has-wall .apps-head .apps-chip.on, html.has-wall .apps-head .svc-tab.on { background: var(--accent-glass); }
+
+/* v4.1: Glass theme, frosted panes with a light edge, like looking through misted glass */
+html.theme-glass {
+	--glass-edge: rgb(255 255 255 / .28);
+	--shadow: 0 8px 32px rgb(0 0 0 / .22), inset 0 1px 0 rgb(255 255 255 / .22);
+}
+html.theme-glass :is(.card, .rail, .search-card, .apps-head, .tiles .bm a, .tiles .bm-open, .tiles .bm-add, .plan-chip, .tools-bar .chip) {
+	border: 1px solid var(--glass-edge) !important;
+	box-shadow: var(--shadow);
+	backdrop-filter: blur(calc(var(--box-blur, 14px) + 8px)) saturate(1.5) !important;
+	-webkit-backdrop-filter: blur(calc(var(--box-blur, 14px) + 8px)) saturate(1.5) !important;
+}
+html.theme-glass:not(.has-wall) body { background: radial-gradient(1000px 700px at 80% -10%, #6a7fd8 0%, transparent 60%), radial-gradient(900px 700px at -10% 110%, #c06aa0 0%, transparent 60%), linear-gradient(135deg, #2a3150, #3b2f4e); background-attachment: fixed; }
+html.theme-glass:not(.has-wall) :is(.card, .rail, .search-card, .apps-head, .tiles .bm a, .tiles .bm-open, .tiles .bm-add) { background: rgb(255 255 255 / .1) !important; }
+html.theme-glass:not(.has-wall) :is(.card, .rail, .search-card, .apps-head) > * { --surface: rgb(255 255 255 / .08); --surface-2: rgb(255 255 255 / .12); }
+html.theme-glass dialog { background: color-mix(in srgb, var(--surface) 82%, transparent); backdrop-filter: blur(24px) saturate(1.4); border: 1px solid var(--glass-edge); }

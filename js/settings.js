@@ -171,7 +171,9 @@
 	/* ---------- theme: modes, colours, fonts ---------- */
 	const MODES = [["light", "mode-light"], ["dark", "mode-dark"], ["auto", "mode-auto"], ["daynight", "mode-dn"]];
 	const ACCENTS = [["#3f75ff", "blue"], ["#3db985", "green"], ["#6c4ff0", "purple"], ["#ec4899", "pink"], ["#ef4444", "red"], ["#f28c28", "orange"], ["#14b8a6", "teal"]];
-	const LATIN = new Set(["inter", "lora", "jetbrains"]);
+	const LATIN = new Set(["inter", "lora", "jetbrains", "roboto", "opensans", "montserrat", "poppins", "lato", "nunito", "garamond", "playfair", "fira", "jost"]);
+	// French- and German-flavoured fonts show off their accents.
+	const SAMPLE = { garamond: "Café · Été 123", playfair: "Château · Aa 123", fira: "Grüße · Straße 123", jost: "Größe · Über 123" };
 	function renderTheme() {
 		const cur = setting("theme", "dark");
 		$("modeRow").replaceChildren(...MODES.map(([id, cls]) => {
@@ -189,7 +191,7 @@
 		$("fontSelect").value = font;
 		$("fontGrid").replaceChildren(...Themes.FONT_LIST.map(([id, fam, name]) =>
 			el("button", { type: "button", class: "font-card" + (font === id ? " on" : ""), "aria-pressed": String(font === id), "data-font": id, onclick: () => { $("fontSelect").value = id; $("fontSelect").dispatchEvent(new Event("change")); } },
-				el("span", { class: "fc-sample", style: `font-family:${fam}`, dir: LATIN.has(id) ? "ltr" : null }, LATIN.has(id) ? "Rubi · Aa Bb 123" : t("fontSample")), el("small", {}, name))));
+				el("span", { class: "fc-sample", style: `font-family:${fam}`, dir: LATIN.has(id) ? "ltr" : null }, LATIN.has(id) ? SAMPLE[id] || "Rubi · Aa Bb 123" : t("fontSample")), el("small", {}, name))));
 	}
 
 	/* ---------- video background ---------- */

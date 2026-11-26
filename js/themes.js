@@ -9,6 +9,7 @@
 		["daynight", null, "", "", "", "", "", "", "", "", "#3f75ff", "", "روز و شب (با ساعت)|Day & night (by time)|Jour et nuit (selon l'heure)|Tag & Nacht (nach Uhrzeit)"],
 		["light", 0, "#d6eaf8", "#f2f9ff", "#b9daf2", "#ffffff", "#eef3f8", "#dde6ef", "#1c2333", "#6b7489", "#3f75ff", "#ffffff", "روشن|Light|Clair|Hell"],
 		["dark", 1, "#061a36", "#0e3a78", "#04243f", "#1f1f23", "#2b2c31", "#34353b", "#ececef", "#9b9ca5", "#3f75ff", "#ffffff", "تیره|Dark|Sombre|Dunkel"],
+		["glass", 1, "#232838", "#4a5a8c", "#5a3f66", "#4a5062", "#575d70", "#6b7286", "#ffffff", "#dfe3ec", "#5b8cff", "#ffffff", "شیشه‌ای|Glass|Verre|Glas"],
 		["turquoise", 0, "#eef8f8", "#c9eeee", "#dff1fb", "#ffffff", "#e8f4f4", "#d3e6e6", "#15302f", "#5b7a79", "#0e9a9a", "#ffffff", "فیروزه‌ای|Turquoise|Turquoise|Türkis"],
 		["ocean", 0, "#eef4fb", "#cfe0ff", "#d4f0f7", "#ffffff", "#e9f0f9", "#d6e1ef", "#14243a", "#5c6d85", "#1f6fd1", "#ffffff", "اقیانوس|Ocean|Océan|Ozean"],
 		["sky", 0, "#f1f7fe", "#d6ecff", "#fff2d9", "#ffffff", "#eaf3fc", "#d9e7f5", "#1a2a3c", "#62748a", "#2b8ad8", "#ffffff", "آسمان|Sky|Ciel|Himmel"],
@@ -69,6 +70,7 @@
 		const saved = byId[id] || byId.auto;
 		const th = saved.id === "daynight" ? byId[isDay() ? "light" : "dark"] : saved;
 		VARS.forEach((v) => root.style.removeProperty(v));
+		root.classList.toggle("theme-glass", th.id === "glass");
 		if (th.id === "auto") root.removeAttribute("data-theme");
 		else root.setAttribute("data-theme", th.dark ? "dark" : "light");
 		if (th.bg) {
@@ -105,6 +107,16 @@
 		["inter", '"Inter", ' + V, "Inter"],
 		["lora", '"Lora", "Parastoo", ' + V, "Lora"],
 		["jetbrains", '"JetBrains Mono", ' + V, "JetBrains Mono"],
+		["roboto", '"Roboto", ' + V, "Roboto"],
+		["opensans", '"Open Sans", ' + V, "Open Sans"],
+		["montserrat", '"Montserrat", ' + V, "Montserrat"],
+		["poppins", '"Poppins", ' + V, "Poppins"],
+		["lato", '"Lato", ' + V, "Lato"],
+		["nunito", '"Nunito", ' + V, "Nunito"],
+		["garamond", '"EB Garamond", ' + V, "EB Garamond"],
+		["playfair", '"Playfair Display", ' + V, "Playfair Display"],
+		["fira", '"Fira Sans", ' + V, "Fira Sans"],
+		["jost", '"Jost", ' + V, "Jost"],
 		["system", 'system-ui, -apple-system, "Segoe UI", Roboto, Tahoma, sans-serif', "System"],
 		["tahoma", 'Tahoma, "Segoe UI", sans-serif', "Tahoma"],
 		["serif", '"Noto Naskh Arabic", "Times New Roman", Georgia, serif', "Serif"],
