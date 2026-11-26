@@ -3,7 +3,7 @@
   "name": "Rubi | Your All-in-One Smart Assistant",
   "short_name": "Rubi",
   "version": "4.1.1",
-  "description": "Rubi, your all-in-one smart assistant: calendar, tasks, notes and shortcuts in your new tab, saved in your own Google account. No ads, no tracking.",
+  "description": "Calendar, tasks, notes and shortcuts in your new tab, saved in your own Google account. No ads, no tracking.",
   "icons": {
     "16": "icons/icon-16.png",
     "32": "icons/icon-32.png",
