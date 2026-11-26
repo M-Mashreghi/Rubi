@@ -1580,3 +1580,4 @@ html.has-wall :is(dialog, .menu, .ctx-menu, .popover, .dropdown, [popover], .toa
 html.has-wall .search-card .search { background: var(--surface-2); }
 html.has-wall .plan-chip { background: color-mix(in srgb, var(--surface) var(--box-a, 60%), transparent); backdrop-filter: blur(var(--box-blur, 14px)); }
 html.has-wall .plan-chip:hover { background: color-mix(in srgb, var(--surface) var(--box-ah, 85%), transparent); }
+.ds-replace { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; margin: 6px 0; flex-direction: row !important; } .ds-replace input { width: auto; margin-top: 3px; }

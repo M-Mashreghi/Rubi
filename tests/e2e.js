@@ -231,6 +231,29 @@ function i18nParity() {
 	const chimes = await page.evaluate(async () => { const out = []; for (const id of Chimes.ids) { const c = new OfflineAudioContext(1, 44100 * 3, 44100); Chimes.play(c, id, 0.6); const d = (await c.startRendering()).getChannelData(0); let pk = 0; for (const x of d) pk = Math.max(pk, Math.abs(x)); out.push(pk); } return out; });
 	check("every built-in chime makes a sound without clipping", chimes.length >= 6 && chimes.every((p) => p > 0.05 && p < 1), chimes);
 
+	console.log("Dastyar import");
+	const ds = await page.evaluate(() => {
+		const before = Store.list("bookmark").length + Store.list("folder").length;
+		const B = (id, name, url, parentId, position) => ({ id, name, url, parentId, position, type: "bookmark", icon: { type: "x", data: "" } });
+		const F = (id, name, parentId, position) => ({ id, name, parentId, position, type: "folder" });
+		const json = { source: "dastyar", storage: {
+			bookmarks_new: { root: [B("a", "Alpha", "https://alpha.test/", "root", 0), F("f1", "Work", "root", 1), B("c", "Gamma", "https://gamma.test/", "root", 2)],
+				f1: [B("d", "Delta", "https://delta.test/", "f1", 0), F("f2", "Deep", "f1", 1)], f2: [B("e", "Eps", "https://eps.test/", "f2", 0)] },
+			bookmarks: [{ title: "Old", items: [{ name: "Legacy", url: "https://legacy.test/" }] }],
+			pinned_bookmark: [{ name: "Ad", url: "https://ad.test/" }],
+			favicons: { "https://alpha.test": "data:image/png;base64,iVBORw0KGgo=" } } };
+		const res = DastyarImport.importInto(json, { replace: true });
+		const items = [...Store.list("bookmark"), ...Store.list("folder")];
+		const top = items.filter((x) => !x.folder).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)).map((x) => x.title);
+		const work = items.find((x) => x.title === "Work"), deep = items.find((x) => x.title === "Deep");
+		const shape = [top.join(","), items.filter((x) => x.folder === work?.id).map((x) => x.title).sort().join(","), items.filter((x) => x.folder === deep?.id).map((x) => x.title).join(","), items.some((x) => /Legacy|Ad/.test(x.title))];
+		res.undo && res.undo();
+		const after = Store.list("bookmark").length + Store.list("folder").length;
+		return { shape, restored: before === after };
+	});
+	check("Dastyar shortcuts keep their order and nested folders", ds.shape.join("|") === "Alpha,Work,Gamma|Deep,Delta|Eps|false", ds.shape);
+	check("undo brings back the old shortcuts", ds.restored);
+
 	console.log("Site flag");
 	const geo = await sw.evaluate(async () => Promise.all(["8.8.8.8", "2.144.0.1", "2a01:4f8::1", "::ffff:8.8.4.4", "192.168.1.1"].map((ip) => KamyarFlag.countryOf(ip))));
 	check("server addresses map to countries inside the extension", geo.join(",") === "US,IR,DE,US,", geo);

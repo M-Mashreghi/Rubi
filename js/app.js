@@ -791,7 +791,9 @@
 		try {
 			const json = JSON.parse(await f.text());
 			if (window.DastyarImport && DastyarImport.isDastyar(json)) {
-				$("settingsMsg").textContent = dastyarSummary(DastyarImport.importInto(json));
+				const res = DastyarImport.importInto(json, { replace: true });
+				$("settingsMsg").textContent = dastyarSummary(res);
+				if (res.undo) H.toast(t("dastyarReplaced"), { label: t("undo"), run: res.undo });
 				return;
 			}
 			const incoming = Store.normalize(json);
@@ -832,9 +834,10 @@
 		if (!f) return;
 		const msg = $("dastyarMsg");
 		try {
-			const res = DastyarImport.importInto(JSON.parse(await f.text()));
+			const res = DastyarImport.importInto(JSON.parse(await f.text()), { replace: $("dastyarReplace").checked });
 			msg.textContent = dastyarSummary(res);
 			msg.className = "dastyar-msg ok";
+			if (res.undo) H.toast(t("dastyarReplaced"), { label: t("undo"), run: res.undo });
 		} catch {
 			msg.textContent = t("importBad");
 			msg.className = "dastyar-msg bad";

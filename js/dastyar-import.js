@@ -164,9 +164,53 @@
 		return ctx;
 	}
 
+	/* Newer Dastyar keeps shortcuts as { root: [...], <folderId>: [...] }: lists of children per parent,
+	 * each child { id, type: "bookmark" | "folder", name, url, position, parentId }. This rebuilds that tree
+	 * exactly (same order, folders inside folders). Returns null when the export has no such tree. */
+	function findTree(v, depth = 0) {
+		if (!v || typeof v !== "object" || depth > 4) return null;
+		if (!Array.isArray(v) && Array.isArray(v.root) && v.root.some((x) => x && typeof x === "object" && "parentId" in x && /bookmark|folder/.test(x.type))) return v;
+		for (const [k, x] of Object.entries(v)) {
+			if (SKIP.test(k) || typeof x !== "object") continue;
+			const t = findTree(x, depth + 1);
+			if (t) return t;
+		}
+		return null;
+	}
+	function readTree(map) {
+		const seenIds = new Set();
+		const kids = (pid, depth) => {
+			if (depth > 8) return [];
+			return (map[String(pid)] || []).filter((x) => x && typeof x === "object").sort((a, b) => (a.position ?? 0) - (b.position ?? 0)).flatMap((x) => {
+				if (seenIds.has(x.id)) return [];
+				seenIds.add(x.id);
+				const name = str(x.name, x.title);
+				if (x.type === "folder") return [{ kind: "folder", name: name || "📁", emoji: str(x.emoji), children: kids(x.id, depth + 1) }];
+				const url = str(x.url, x.link);
+				if (!url || !/^(https?|ftp):\/\//i.test(url)) return [];
+				return [{ kind: "bookmark", name: name || url.replace(/^https?:\/\/(www\.)?/i, "").split("/")[0], url, emoji: str(x.emoji) }];
+			});
+		};
+		return kids("root", 0);
+	}
+	// Dastyar's saved site icons: { "https://site.com": "data:image/png;base64,…" }
+	function findFavicons(v, depth = 0) {
+		if (!v || typeof v !== "object" || depth > 3) return {};
+		if (v.favicons && typeof v.favicons === "object" && !Array.isArray(v.favicons)) {
+			const out = {};
+			for (const [k, x] of Object.entries(v.favicons)) if (/^https?:\/\//.test(k) && typeof x === "string" && /^data:image\//.test(x) && x.length < 60000) out[k.replace(/\/$/, "")] = x;
+			return out;
+		}
+		for (const x of Object.values(v)) { const r = findFavicons(x, depth + 1); if (Object.keys(r).length) return r; }
+		return {};
+	}
+
 	function collect(root) {
-		const found = { todos: [], boards: [], labels: new Map(), notes: [], bookmarks: [], birthdays: [] };
+		const found = { todos: [], boards: [], labels: new Map(), notes: [], bookmarks: [], birthdays: [], tree: null, favicons: {} };
 		const seen = new WeakSet();
+		const treeMap = findTree(root);
+		if (treeMap) found.tree = readTree(treeMap);
+		found.favicons = findFavicons(root);
 
 		function board(b) {
 			const groups = Array.isArray(b.groups) ? b.groups : [];
@@ -254,6 +298,8 @@
 			if (ctx === "todo" && Array.isArray(v.todos) && str(v.title, v.name)) return group(v);
 			const hasText = !!str(v.title, v.name, v.text, v.content, v.body);
 			if (ctx === "label" && str(v.name, v.title) && (v.color != null || v.id != null || v.uuid != null) && !Array.isArray(v.items)) return label(v);
+			// When the shortcut tree was found, older copies of the shortcuts (and pinned ads) are left out.
+			if (ctx === "bookmark" && found.tree) return;
 			if (ctx === "bookmark" && (str(v.url, v.link, v.href) || Array.isArray(v.items) || Array.isArray(v.children))) return bookmark(v);
 			if (ctx === "todo" && hasText && ("done" in v || "completed" in v || "isDone" in v || "status" in v || "priority" in v || "dueDate" in v || "labels" in v || "groupId" in v || "orderIndex" in v)) return todo(v, null);
 			if (ctx === "note" && (str(v.text, v.body, v.content, v.note_text, v.description) || (str(v.title, v.note_title) && !Array.isArray(v.notes)))) {
@@ -261,7 +307,7 @@
 			}
 			if (ctx === "birthday" && str(v.name, v.title) && (v.date || v.birthday || v.birthDate || v.month != null)) return birthday(v);
 			for (const [k, x] of Object.entries(v)) {
-				if (SKIP.test(k)) continue;
+				if (SKIP.test(k) || (found.tree && /^(bookmarks?(_new)?|pinned.*|favicons?)$/i.test(k))) continue;
 				walk(x, contextOf(k, ctx), depth + 1);
 			}
 		}
@@ -270,7 +316,7 @@
 	}
 
 	/** Builds the Rubi items and merges them into the store in one write. Returns counts per kind. */
-	function importInto(json) {
+	function importInto(json, opts = {}) {
 		const f = collect(json);
 		const data = structuredClone(Store.get());
 		const now = Date.now();
@@ -357,7 +403,39 @@
 			put("note", x);
 			n.notes++;
 		});
-		// bookmarks
+		// shortcuts, the newer way: the same tree as in Dastyar
+		const created = [], replaced = [];
+		if (f.tree && f.tree.length) {
+			const urlKey = (u) => norm(u).replace(/\/$/, "");
+			if (opts.replace) {
+				// Start from a clean grid: today's shortcuts and folders are removed (they can be brought back with Undo).
+				[...live("bookmark"), ...live("folder")].forEach((x) => { replaced.push(structuredClone(x)); data.items[x.id] = { id: x.id, type: x.type, deleted: true, updatedAt: now }; });
+			} else {
+				// Dastyar's shortcuts go first; what was already on the grid moves after them.
+				const shift = f.tree.length;
+				[...live("bookmark"), ...live("folder")].filter((x) => !x.folder).forEach((x) => { x.order = (x.order ?? 0) + shift; x.updatedAt = now; });
+			}
+			const place = (nodes, parent) => nodes.forEach((node, i) => {
+				const here = live(node.kind).filter((x) => (x.folder || "") === parent);
+				if (node.kind === "folder") {
+					let fo = here.find((x) => norm(x.title) === norm(node.name));
+					if (!fo) { fo = put("folder", { title: node.name, emoji: node.emoji || "📁", folder: parent, order: i }); created.push(fo.id); n.bookmarks++; }
+					else { fo.order = i; fo.updatedAt = now; }
+					place(node.children, fo.id);
+					return;
+				}
+				const same = here.find((x) => urlKey(x.url) === urlKey(node.url));
+				if (same) { same.order = i; same.updatedAt = now; return; }
+				created.push(put("bookmark", { title: node.name, url: node.url, emoji: node.emoji || "", folder: parent, order: i }).id);
+				n.bookmarks++;
+			});
+			place(f.tree, "");
+		}
+		if (Object.keys(f.favicons).length && chrome.storage) {
+			chrome.storage.local.get("kamyar_favicons").then((r) => chrome.storage.local.set({ kamyar_favicons: { ...(r.kamyar_favicons || {}), ...f.favicons } })).catch(() => {});
+			window.Brands && Brands.addIcons && Brands.addIcons(f.favicons);
+		}
+		// bookmarks, the older ways (lists, or folders with items)
 		const haveUrl = new Set(live("bookmark").map((x) => norm(x.url).replace(/\/$/, "")));
 		const folderIds = new Map(live("folder").map((f) => [norm(f.title), f.id]));
 		f.bookmarks.forEach((x) => {
@@ -383,6 +461,15 @@
 		});
 		Object.values(data.items).forEach((i) => i.doneAt === undefined && delete i.doneAt);
 		Store.replace(data, "local");
+		// Undo puts the shortcuts back the way they were and takes the new ones away.
+		if (opts.replace && replaced.length) n.undo = () => {
+			const d = structuredClone(Store.get());
+			const t = Date.now();
+			created.forEach((id) => { const it = d.items[id]; if (it) d.items[id] = { id, type: it.type, deleted: true, updatedAt: t }; });
+			replaced.forEach((x) => { d.items[x.id] = { ...x, updatedAt: t }; });
+			Store.replace(d, "local");
+		};
+		n.tree = !!(f.tree && f.tree.length);
 		return n;
 	}
 

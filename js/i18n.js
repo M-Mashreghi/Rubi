@@ -4,6 +4,7 @@
 	"use strict";
 	const D = {};
 	D.fa = {
+		dastyarReplace: "میان‌برهای فعلی روبی با میان‌برها و پوشه‌های دستیار جایگزین شوند (همان ترتیب و همان پوشه‌ها)", dastyarReplaced: "میان‌برها دقیقاً مثل دستیار چیده شدند",
 		welcomeSound: "صدای خوشامد", welcomeSoundHint: "وقتی روبی باز می‌شود یک صدای ملایم پخش شود", chCrystal: "کریستال", chMorning: "صبح بخیر", chHarp: "چنگ", chBowl: "کاسه‌ی ذن", chKalimba: "کالیمبا", chDrop: "قطره‌ی شبنم", chBreeze: "نسیم", chPreview: "پخش نمونه", chUpload: "آپلود صدای دلخواه", chReplace: "عوض کردن صدای دلخواه", chRemove: "حذف صدای دلخواه", chUploadHint: "هر فایل صوتی (MP3، WAV، OGG و …) تا ۲ مگابایت؛ بهتر است کوتاه باشد. صدای دلخواه فقط روی همین دستگاه می‌ماند.", chTooBig: "فایل صوتی باید کمتر از ۲ مگابایت باشد", chVolume: "بلندی صدا", chWhen: "چه وقت پخش شود؟", chWhen_tab: "با هر تب جدید", chWhen_hour: "حداکثر ساعتی یک بار", chWhen_day: "فقط اولین تب هر روز",
 		avWomen: "زن", avMen: "مرد",
 		avChoose: "آواتار خودتان را انتخاب کنید", avGirls: "دختر", avBoys: "پسر", avPick: "انتخاب این آواتار", avOwn: "عکس خودم",
@@ -61,6 +62,7 @@
 		h_newyear: "سال نو میلادی", h_christmas: "کریسمس"
 	};
 	D.en = {
+		dastyarReplace: "Replace Rubi's current shortcuts with Dastyar's shortcuts and folders (same order, same folders)", dastyarReplaced: "Shortcuts are now laid out exactly as in Dastyar",
 		welcomeSound: "Welcome sound", welcomeSoundHint: "Play a gentle sound when Rubi opens", chCrystal: "Crystal", chMorning: "Good morning", chHarp: "Harp", chBowl: "Zen bowl", chKalimba: "Kalimba", chDrop: "Dewdrop", chBreeze: "Breeze", chPreview: "Play a preview", chUpload: "Upload your own sound", chReplace: "Replace your sound", chRemove: "Remove your sound", chUploadHint: "Any audio file (MP3, WAV, OGG…) up to 2 MB; short is best. Your own sound stays on this device.", chTooBig: "The audio file must be under 2 MB", chVolume: "Volume", chWhen: "When should it play?", chWhen_tab: "Every new tab", chWhen_hour: "At most once an hour", chWhen_day: "Only the first tab each day",
 		avWomen: "Women", avMen: "Men",
 		avChoose: "Pick your avatar", avGirls: "Girls", avBoys: "Boys", avPick: "Use this avatar", avOwn: "My own photo",
@@ -118,6 +120,7 @@
 		h_newyear: "New Year's Day", h_christmas: "Christmas"
 	};
 	D.fr = {
+		dastyarReplace: "Remplacer les raccourcis actuels de Rubi par ceux de Dastyar (même ordre, mêmes dossiers)", dastyarReplaced: "Les raccourcis sont disposés exactement comme dans Dastyar",
 		welcomeSound: "Son d'accueil", welcomeSoundHint: "Jouer un son doux à l'ouverture de Rubi", chCrystal: "Cristal", chMorning: "Bonjour", chHarp: "Harpe", chBowl: "Bol zen", chKalimba: "Kalimba", chDrop: "Goutte de rosée", chBreeze: "Brise", chPreview: "Écouter", chUpload: "Importer votre son", chReplace: "Remplacer votre son", chRemove: "Supprimer votre son", chUploadHint: "N'importe quel fichier audio (MP3, WAV, OGG…) jusqu'à 2 Mo ; court de préférence. Votre son reste sur cet appareil.", chTooBig: "Le fichier audio doit faire moins de 2 Mo", chVolume: "Volume", chWhen: "Quand le jouer ?", chWhen_tab: "À chaque nouvel onglet", chWhen_hour: "Au plus une fois par heure", chWhen_day: "Seulement au premier onglet du jour",
 		avWomen: "Femmes", avMen: "Hommes",
 		avChoose: "Choisissez votre avatar", avGirls: "Filles", avBoys: "Garçons", avPick: "Utiliser cet avatar", avOwn: "Ma propre photo",
@@ -175,6 +178,7 @@
 		h_newyear: "Jour de l'An", h_christmas: "Noël"
 	};
 	D.de = {
+		dastyarReplace: "Rubis aktuelle Verknüpfungen durch die von Dastyar ersetzen (gleiche Reihenfolge, gleiche Ordner)", dastyarReplaced: "Die Verknüpfungen sind jetzt genau wie in Dastyar angeordnet",
 		welcomeSound: "Begrüßungston", welcomeSoundHint: "Einen sanften Ton spielen, wenn Rubi öffnet", chCrystal: "Kristall", chMorning: "Guten Morgen", chHarp: "Harfe", chBowl: "Zen-Schale", chKalimba: "Kalimba", chDrop: "Tautropfen", chBreeze: "Brise", chPreview: "Probe anhören", chUpload: "Eigenen Ton hochladen", chReplace: "Eigenen Ton ersetzen", chRemove: "Eigenen Ton entfernen", chUploadHint: "Jede Audiodatei (MP3, WAV, OGG…) bis 2 MB; am besten kurz. Dein eigener Ton bleibt auf diesem Gerät.", chTooBig: "Die Audiodatei muss kleiner als 2 MB sein", chVolume: "Lautstärke", chWhen: "Wann soll er spielen?", chWhen_tab: "Bei jedem neuen Tab", chWhen_hour: "Höchstens einmal pro Stunde", chWhen_day: "Nur beim ersten Tab des Tages",
 		avWomen: "Frauen", avMen: "Männer",
 		avChoose: "Wähle deinen Avatar", avGirls: "Mädchen", avBoys: "Jungen", avPick: "Diesen Avatar verwenden", avOwn: "Eigenes Foto",

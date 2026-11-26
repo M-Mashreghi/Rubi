@@ -38,6 +38,18 @@
 			return null;
 		}
 	}
+	// Site icons brought over from Dastyar (chrome.storage.local "kamyar_favicons": origin → data URL).
+	const FAV = {};
+	let favReady = false;
+	const pending = [];
+	const originOf = (url) => { try { return new URL(url).origin; } catch { return ""; } };
+	function addIcons(map) {
+		Object.assign(FAV, map || {});
+		pending.splice(0).forEach(([i, o]) => { if (FAV[o] && i.isConnected !== false) { i.src = FAV[o]; i.className = "fav"; } });
+	}
+	try {
+		chrome.storage.local.get("kamyar_favicons").then((r) => { favReady = true; addIcons(r.kamyar_favicons); }).catch(() => (favReady = true));
+	} catch { favReady = true; }
 	/** An <img> with the best logo for the site. */
 	function img(url, name, size) {
 		const i = document.createElement("img");
@@ -49,9 +61,13 @@
 		if (b) {
 			i.src = "icons/brands/" + b[0];
 			i.className = "brand" + (b[1] ? " dark-logo" : "");
+		} else if (FAV[originOf(url)]) {
+			i.src = FAV[originOf(url)];
+			i.className = "fav";
 		} else {
 			const local = siteIcon(url);
 			i.src = local || s2(url);
+			if (!local && !favReady) pending.push([i, originOf(url)]);
 			i.className = "fav";
 			// A bundled logo that fails falls back to the online icon, then to a letter.
 			if (local) {
@@ -62,5 +78,5 @@
 		i.addEventListener("error", () => i.replaceWith(letter(name, size)), { once: true });
 		return i;
 	}
-	window.Brands = { find, img };
+	window.Brands = { find, img, addIcons };
 })();
