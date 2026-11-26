@@ -142,6 +142,61 @@
 			root.classList.remove("has-wall");
 			root.style.removeProperty("--wall");
 		}
+		updateInk(img, video, dim, ba);
+	}
+
+	/* When boxes are see-through, their text must suit the picture behind them, not the theme:
+	 * dark text on a dark photo (or light text on a bright one) can't be read. We measure how
+	 * bright the background is once, then pick light or dark text for the boxes. */
+	const lum = (r, g, b) => (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+	function cssLum(name) {
+		const c = document.createElement("canvas").getContext("2d");
+		c.fillStyle = getComputedStyle(document.documentElement).getPropertyValue(name).trim() || "#000";
+		c.fillRect(0, 0, 1, 1);
+		const d = c.getImageData(0, 0, 1, 1).data;
+		return lum(d[0], d[1], d[2]);
+	}
+	let inkSeq = 0;
+	function wallLum(img) {
+		const sig = img.length + ":" + img.slice(-48);
+		const hit = ls("hamyar_wall_lum");
+		if (hit && hit.startsWith(sig + "=")) return Promise.resolve(Number(hit.slice(sig.length + 1)));
+		return new Promise((res) => {
+			const im = new Image();
+			im.onload = () => {
+				try {
+					const c = document.createElement("canvas");
+					c.width = c.height = 24;
+					const g = c.getContext("2d");
+					g.drawImage(im, 0, 0, 24, 24);
+					const d = g.getImageData(0, 0, 24, 24).data;
+					let t = 0;
+					for (let i = 0; i < d.length; i += 4) t += lum(d[i], d[i + 1], d[i + 2]);
+					const L = t / (d.length / 4);
+					ls("hamyar_wall_lum", sig + "=" + L.toFixed(3));
+					res(L);
+				} catch { res(null); }
+			};
+			im.onerror = () => res(null);
+			im.src = img;
+		});
+	}
+	async function updateInk(img, video, dim, alpha) {
+		const root = document.documentElement, seq = ++inkSeq;
+		let L = null;
+		if (img && !video) L = await wallLum(img);
+		else if (video) L = 0.3; // videos are usually dark; the dim makes them darker still
+		if (seq !== inkSeq) return;
+		root.classList.remove("ink-light", "ink-dark");
+		if (L == null || !root.classList.contains("has-wall")) return;
+		// Work in linear light, as contrast is measured (WCAG), and switch the text only when the
+		// other colour reads clearly better.
+		const lin = (v) => Math.pow(v, 2.2), cr = (x, y) => (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+		const a = alpha / 100, wall = lin(L) * (1 - Math.max(0, Math.min(85, dim)) / 100);
+		const box = a * lin(cssLum("--surface")) + (1 - a) * wall;
+		const text = lin(cssLum("--text")), light = text > 0.2;
+		const now = cr(text, box), other = cr(light ? 0.011 : 0.9, box);
+		if (now < 4.5 && other > now * 1.6) root.classList.add(light ? "ink-dark" : "ink-light");
 	}
 
 	/** Shrinks an image file to at most 2560px wide JPEG so it fits in local storage. */

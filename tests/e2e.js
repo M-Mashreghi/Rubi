@@ -254,6 +254,22 @@ function i18nParity() {
 	check("Dastyar shortcuts keep their order and nested folders", ds.shape.join("|") === "Alpha,Work,Gamma|Deep,Delta|Eps|false", ds.shape);
 	check("undo brings back the old shortcuts", ds.restored);
 
+	console.log("Readable text over see-through boxes");
+	const ink = await page.evaluate(async () => {
+		const wait = () => new Promise((r) => setTimeout(r, 400));
+		const c = document.createElement("canvas"); c.width = c.height = 8;
+		const g = c.getContext("2d"); g.fillStyle = "#0a0c14"; g.fillRect(0, 0, 8, 8);
+		const dark = c.toDataURL("image/png");
+		Store.setSetting("theme", "light"); Themes.setWallpaper(dark); Themes.setBoxAlpha(5, 30); await wait();
+		const a = document.documentElement.className;
+		Themes.setBoxAlpha(90, 95); await wait();
+		const b = document.documentElement.className;
+		Themes.setWallpaper(null); Themes.setBoxAlpha(60, 85); Store.setSetting("theme", "dark"); await wait();
+		return [a.includes("ink-light"), !/ink-/.test(b)];
+	});
+	check("light text on a dark picture when boxes are almost clear", ink[0], ink);
+	check("theme text stays when boxes are solid", ink[1], ink);
+
 	console.log("Site flag");
 	const geo = await sw.evaluate(async () => Promise.all(["8.8.8.8", "2.144.0.1", "2a01:4f8::1", "::ffff:8.8.4.4", "192.168.1.1"].map((ip) => KamyarFlag.countryOf(ip))));
 	check("server addresses map to countries inside the extension", geo.join(",") === "US,IR,DE,US,", geo);

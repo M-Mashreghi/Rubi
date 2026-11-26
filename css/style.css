@@ -1581,3 +1581,24 @@ html.has-wall .search-card .search { background: var(--surface-2); }
 html.has-wall .plan-chip { background: color-mix(in srgb, var(--surface) var(--box-a, 60%), transparent); backdrop-filter: blur(var(--box-blur, 14px)); }
 html.has-wall .plan-chip:hover { background: color-mix(in srgb, var(--surface) var(--box-ah, 85%), transparent); }
 .ds-replace { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; margin: 6px 0; flex-direction: row !important; } .ds-replace input { width: auto; margin-top: 3px; }
+
+/* v4: text colour follows the background when boxes are see-through (js/themes.js updateInk) */
+html.has-wall.ink-light :is(.card, .panel, .widget, .rail, .search-card, .side-panel, .apps-top, .tools-bar, .plan-chip, .page-head, .tiles .bm, .folder-dlg) {
+	--text: #f4f5f8; --muted: rgb(236 238 244 / .74); --border: rgb(255 255 255 / .16);
+	--s1-solid: #26272c; --s2-solid: #303137;
+	color: var(--text); text-shadow: 0 1px 2px rgb(0 0 0 / .35);
+}
+html.has-wall.ink-dark :is(.card, .panel, .widget, .rail, .search-card, .side-panel, .apps-top, .tools-bar, .plan-chip, .page-head, .tiles .bm, .folder-dlg) {
+	--text: #161b26; --muted: rgb(22 27 38 / .7); --border: rgb(0 0 0 / .12);
+	--s1-solid: #ffffff; --s2-solid: #f1f3f8;
+	color: var(--text); text-shadow: 0 1px 2px rgb(255 255 255 / .4);
+}
+html.has-wall:is(.ink-light, .ink-dark) :is(dialog, .menu, .ctx-menu, .popover, .dropdown, [popover], .toast) { text-shadow: none; }
+html.has-wall:is(.ink-light, .ink-dark) .rail-btn::after { background: #1c2333; color: #fff; text-shadow: none; }
+html.has-wall:is(.ink-light, .ink-dark) :is(.card, .panel, .widget, .rail, .search-card, .side-panel, .apps-top, .tools-bar) {
+	--s1-glass: color-mix(in srgb, var(--s1-solid) calc(var(--box-a, 60%) * 0.85), transparent);
+	--s2-glass: color-mix(in srgb, var(--s2-solid) calc(var(--box-a, 60%) * 0.9), transparent);
+	--s1-glass-h: color-mix(in srgb, var(--s1-solid) calc(var(--box-ah, 85%) * 0.9), transparent);
+	--s2-glass-h: color-mix(in srgb, var(--s2-solid) var(--box-ah, 85%), transparent);
+}
+html.has-wall:is(.ink-light, .ink-dark) .tiles .bm { --surface: var(--s1-solid); --surface-2: var(--s2-solid); }

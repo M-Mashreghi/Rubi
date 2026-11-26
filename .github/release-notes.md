@@ -14,6 +14,7 @@ The first public release of Rubi, a personal new-tab page for Chrome with no ads
 راهنمای کامل و انتقال از دستیار در [README](https://github.com/M-Mashreghi/Rubi#نصب) است. Full guide and Dastyar import: [README](https://github.com/M-Mashreghi/Rubi#install).
 
 ### تازه‌های این نسخه · New in this version
+- **۴.۰.۰** — یکدستی کامل شفافیت: همه‌ی باکس‌ها و اجزای داخلشان با تنظیم شفافیت تغییر می‌کنند؛ وقتی باکس‌ها شفاف‌اند رنگ نوشته خودکار با روشنی پس‌زمینه جور می‌شود تا همیشه خوانا بماند (پوسته‌ی روشن روی عکس تیره و برعکس) · Consistent transparency everywhere, and text that stays readable over any wallpaper
 - **۳.۱.۰** — بازیابی از دستیار دقیقاً مثل خود دستیار: همان ترتیب، همان پوشه‌ها و زیرپوشه‌ها و همان آیکون‌ها؛ بدون تکرار و تبلیغ؛ با گزینه‌ی جایگزینی و دکمه‌ی برگرداندن · Dastyar import now mirrors Dastyar exactly (order, nested folders, icons), with replace and undo
 - 💎 **کامیار حالا «روبی» است!** نسخه‌ی ۳ با نام و لوگوی تازه. همه‌ی اطلاعات و تنظیمات شما سر جایش می‌ماند · **Kamyar is now Rubi!** Version 3 with a new name and logo; all your data and settings stay as they are
 - 🔔 صدای خوشامد (پیش‌فرض خاموش): ۷ صدای ملایم هنگام باز شدن روبی، یا صدای دلخواه خودتان با آپلود فایل؛ بلندی صدا و دفعات پخش قابل تنظیم · Welcome sound (off by default): 7 gentle chimes when Rubi opens, or upload your own; volume and how often
