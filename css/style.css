@@ -1561,3 +1561,22 @@ html.has-wall .cal-foot-btn:hover { background: color-mix(in srgb, var(--accent)
 .ws-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .dialog .ws-vol { flex-direction: row; align-items: center; }
 .dialog .ws-vol input { flex: 1; padding: 0; border: 0; background: transparent; accent-color: var(--accent); }
+
+/* ---------- v4: everything inside a box follows the box opacity ----------
+ * Inner surfaces (inputs, chips, day cells, tool rows, tabs…) use --surface / --surface-2. Over a wallpaper,
+ * children of a box get see-through versions of those colours, computed once on <html> from the solid theme
+ * colours; the boxes themselves keep the solid ones for their own background mix. Menus and dialogs stay solid. */
+html.has-wall {
+	--s1-solid: var(--surface); --s2-solid: var(--surface-2);
+	--s1-glass: color-mix(in srgb, var(--surface) calc(var(--box-a, 60%) * 0.85), transparent);
+	--s2-glass: color-mix(in srgb, var(--surface-2) calc(var(--box-a, 60%) * 0.9), transparent);
+	--s1-glass-h: color-mix(in srgb, var(--surface) calc(var(--box-ah, 85%) * 0.9), transparent);
+	--s2-glass-h: color-mix(in srgb, var(--surface-2) var(--box-ah, 85%), transparent);
+}
+html.has-wall :is(.card, .panel, .widget, .rail, .search-card, .side-panel, .apps-top, .tools-bar) > * { --surface: var(--s1-glass); --surface-2: var(--s2-glass); }
+html.has-wall :is(.card, .panel, .widget, .rail, .search-card, .side-panel):hover > * { --surface: var(--s1-glass-h); --surface-2: var(--s2-glass-h); }
+html.has-wall :is(.card, .panel, .widget, .rail, .search-card, .side-panel, .apps-top, .tools-bar) { --surface: var(--s1-solid); --surface-2: var(--s2-solid); }
+html.has-wall :is(dialog, .menu, .ctx-menu, .popover, .dropdown, [popover], .toast) { --surface: var(--s1-solid); --surface-2: var(--s2-solid); }
+html.has-wall .search-card .search { background: var(--surface-2); }
+html.has-wall .plan-chip { background: color-mix(in srgb, var(--surface) var(--box-a, 60%), transparent); backdrop-filter: blur(var(--box-blur, 14px)); }
+html.has-wall .plan-chip:hover { background: color-mix(in srgb, var(--surface) var(--box-ah, 85%), transparent); }
