@@ -270,6 +270,24 @@ function i18nParity() {
 	check("light text on a dark picture when boxes are almost clear", ink[0], ink);
 	check("theme text stays when boxes are solid", ink[1], ink);
 
+	console.log("Hiding boxes");
+	const boxes = await page.evaluate(async () => {
+		const out = [];
+		for (const w of ["daily", "trip"]) {
+			const box = document.querySelector(`[data-widget="${w}"]`);
+			const x = box.querySelector(":scope > .box-x");
+			out.push(!!x);
+			x && x.click();
+			await new Promise((r) => setTimeout(r, 300));
+			out.push(box.offsetParent === null);
+			Store.setSetting("widgets", { ...(H.setting("widgets", {}) || {}), [w]: true });
+			await new Promise((r) => setTimeout(r, 300));
+			out.push(box.offsetParent !== null);
+		}
+		return out;
+	});
+	check("the daily and countdown boxes can be hidden with ✕ and turned back on", boxes.every(Boolean), boxes);
+
 	console.log("Site flag");
 	const geo = await sw.evaluate(async () => Promise.all(["8.8.8.8", "2.144.0.1", "2a01:4f8::1", "::ffff:8.8.4.4", "192.168.1.1"].map((ip) => KamyarFlag.countryOf(ip))));
 	check("server addresses map to countries inside the extension", geo.join(",") === "US,IR,DE,US,", geo);

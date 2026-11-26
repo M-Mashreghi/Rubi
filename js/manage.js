@@ -54,6 +54,13 @@
 			box.prepend(el("button", { class: "box-x", type: "button", title: t("boxHide"), "aria-label": t("boxHide"), onclick: (e) => { e.stopPropagation(); hide(w); } }, "✕"));
 		});
 	}
+	// Some boxes redraw everything inside them (the countdown card does); put their ✕ back.
+	let xQueued = false;
+	new MutationObserver(() => {
+		if (xQueued) return;
+		xQueued = true;
+		requestAnimationFrame(() => { xQueued = false; addCloseButtons(); });
+	}).observe(document.body, { childList: true, subtree: true });
 	function relabel() {
 		document.querySelectorAll(".box-x").forEach((b) => { b.title = t("boxHide"); b.setAttribute("aria-label", t("boxHide")); });
 	}
