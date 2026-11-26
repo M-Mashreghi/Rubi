@@ -1613,8 +1613,8 @@ html.has-wall.ink-dark .apps-head { --text: #161b26; --muted: rgb(22 27 38 / .7)
 
 /* v4.1: blue (accent) buttons on see-through boxes are see-through too, a little more solid than the box so they still stand out */
 html.has-wall {
-	--accent-glass: color-mix(in srgb, var(--accent) calc(var(--box-a, 60%) * 0.55 + 40%), transparent);
-	--accent-glass-h: color-mix(in srgb, var(--accent) calc(var(--box-ah, 85%) * 0.4 + 60%), transparent);
+	--accent-glass: color-mix(in srgb, var(--accent) calc(var(--box-a, 60%) * 0.35 + 16%), transparent);
+	--accent-glass-h: color-mix(in srgb, var(--accent) calc(var(--box-ah, 85%) * 0.35 + 30%), transparent);
 }
 html.has-wall :is(.card, .panel, .widget, .rail, .search-card, .side-panel, .apps-head, .tools-bar, .tiles) :is(.btn:not(.btn-ghost):not(.btn-danger), .search-go, .side-tab.active[data-side="todo"], .daily-tab.active, .snd-play, .snd-preset.active, .svc-tab.on, .apps-chip.svc-manage, .bday-chip.on, .app-add),
 html.has-wall :is(.card, .widget) .cal-day.today {
@@ -1638,3 +1638,4 @@ html.theme-glass:not(.has-wall) body { background: radial-gradient(1000px 700px 
 html.theme-glass:not(.has-wall) :is(.card, .rail, .search-card, .apps-head, .tiles .bm a, .tiles .bm-open, .tiles .bm-add) { background: rgb(255 255 255 / .1) !important; }
 html.theme-glass:not(.has-wall) :is(.card, .rail, .search-card, .apps-head) > * { --surface: rgb(255 255 255 / .08); --surface-2: rgb(255 255 255 / .12); }
 html.theme-glass dialog { background: color-mix(in srgb, var(--surface) 82%, transparent); backdrop-filter: blur(24px) saturate(1.4); border: 1px solid var(--glass-edge); }
+html.has-wall :is(.card, .panel, .widget, .rail, .search-card, .side-panel, .apps-head, .tools-bar, .tiles) :is(.btn:not(.btn-ghost):not(.btn-danger), .search-go, .snd-play, .daily-tab.active, .side-tab.active[data-side="todo"], .snd-preset.active, .svc-tab.on, .apps-chip.svc-manage, .bday-chip.on) { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent); }
