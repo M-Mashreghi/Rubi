@@ -404,14 +404,15 @@ function i18nParity() {
 		await wait(300);
 		const grew = Pet.stats().xp === before + 10;
 		const bubble = !document.querySelector("#petHome .pet-bubble").hidden;
+		const tricked = Object.keys(PetFx.TRICKS).length === 8 && !!Pet.show("flip") === false && document.querySelector("#petHome .pet-body").classList.contains("tr-flip");
 		Pet.feed();
 		await wait(100);
 		const fed = Date.now() - H.setting("pet", {}).fed < 5000;
 		await Store.setSetting("pet", { ...H.setting("pet", {}), on: false });
 		await wait(100);
-		return [offFirst, asked, !!home, grew, bubble, fed, !document.getElementById("petHome"), !Pet.invite()];
+		return [offFirst, asked, !!home, grew, bubble, tricked, fed, !document.getElementById("petHome"), !Pet.invite()];
 	});
-	check("the pet is off until asked, can be adopted, grows with a finished task, reacts, eats and can be turned off", pet.every(Boolean), pet);
+	check("the pet is off until asked, can be adopted, grows with a finished task, reacts, does its own tricks, eats and can be turned off", pet.every(Boolean), pet);
 	await page.evaluate(() => { Fx.clear(); document.querySelectorAll(".care-card").forEach((c) => c.remove()); H.showView("home"); });
 
 	check("no page errors", errors.length === 0, errors);

@@ -7,7 +7,7 @@
 	const KINDS = ["cat", "dog", "parrot", "rabbit", "fox", "panda", "penguin", "hamster"];
 	const FOOD = { cat: "🐟", dog: "🦴", parrot: "🌻", rabbit: "🥕", fox: "🫐", panda: "🎋", penguin: "🐟", hamster: "🌰" };
 	const HOUR = 3600000;
-	const cfg = () => ({ on: false, kind: "cat", name: "", side: "start", since: 0, fed: 0, petted: 0, treats: 0, ...(setting("pet", {}) || {}) });
+	const cfg = () => ({ on: false, kind: "cat", name: "", side: "start", since: 0, fed: 0, petted: 0, treats: 0, sound: true, ...(setting("pet", {}) || {}) });
 	const save = (patch) => Store.setSetting("pet", { ...cfg(), ...patch });
 	const petName = (c = cfg()) => c.name || t("petN_" + c.kind);
 	let focusLog = {};
@@ -93,7 +93,7 @@
 		const eyeC = L.patch ? "#fff" : dark, glint = L.patch ? dark : "#fff";
 		if (mood === "sleep") p.push(`<path d="M43 51 Q48 55 53 51 M67 51 Q72 55 77 51" fill="none" stroke="${eyeC}" stroke-width="2.4" stroke-linecap="round"/>`);
 		else {
-			p.push(`<g class="pet-eyes"><circle cx="48" cy="50" r="${mood === "happy" ? 5 : 4.5}" fill="${eyeC}"/><circle cx="72" cy="50" r="${mood === "happy" ? 5 : 4.5}" fill="${eyeC}"/><circle cx="49.6" cy="48.3" r="1.6" fill="${glint}"/><circle cx="73.6" cy="48.3" r="1.6" fill="${glint}"/></g>`);
+			p.push(`<g class="pet-look"><g class="pet-eyes"><circle cx="48" cy="50" r="${mood === "happy" ? 5 : 4.5}" fill="${eyeC}"/><circle cx="72" cy="50" r="${mood === "happy" ? 5 : 4.5}" fill="${eyeC}"/><circle cx="49.6" cy="48.3" r="1.6" fill="${glint}"/><circle cx="73.6" cy="48.3" r="1.6" fill="${glint}"/></g></g>`);
 			if (mood === "sad") p.push(`<path d="M42 41 L52 44 M78 41 L68 44" stroke="${L.patch ? dark : "#5b4636"}" stroke-width="2" stroke-linecap="round"/>`);
 		}
 		// blush
@@ -125,6 +125,7 @@
 		if (!home) {
 			home = el("div", { id: "petHome", class: "pet-home" });
 			home.addEventListener("click", (e) => { if (!e.target.closest(".pet-menu")) love(); });
+			home.addEventListener("dblclick", (e) => { if (!e.target.closest(".pet-menu")) show(); });
 			document.body.append(home);
 		}
 		const s = stats(c);
@@ -139,6 +140,7 @@
 				el("div", { class: "pet-menu" },
 					el("button", { type: "button", class: "icon-btn small", title: t("petFeed"), onclick: feed }, FOOD[c.kind]),
 					el("button", { type: "button", class: "icon-btn small", title: t("petPet"), onclick: love }, "🤚"),
+					el("button", { type: "button", class: "icon-btn small", title: t("petTrick"), onclick: show }, "🎪"),
 					el("button", { type: "button", class: "icon-btn small", title: t("petManage"), onclick: () => openDialog() }, "⚙")));
 			home.querySelector(".pet-body").innerHTML = svg(c.kind, s.mood, s.level);
 		}
@@ -159,6 +161,20 @@
 		if (!b) return;
 		b.classList.remove("hop"); void b.offsetWidth; b.classList.add("hop");
 	}
+	/** The pet's voice, when sounds are on (only after the person does something, never on its own). */
+	function voice(what) {
+		const c = cfg();
+		if (c.sound === false) return;
+		PetFx.sound(what || c.kind, stats(c).mood);
+	}
+	/** A trick of the pet's own kind, with its voice. */
+	function show(name) {
+		const c = cfg(), b = home?.querySelector(".pet-body");
+		if (!b) return;
+		stopWalk();
+		PetFx.trick(b, c.kind, typeof name === "string" ? name : "");
+		voice();
+	}
 	function hearts() {
 		const r = home?.querySelector(".pet-body")?.getBoundingClientRect();
 		if (!r) return;
@@ -174,6 +190,7 @@
 		save({ petted: Date.now() });
 		hop(); hearts();
 		const c = cfg();
+		voice(c.kind === "cat" ? "purr" : c.kind);
 		say(stats(c).hungry ? t("petHungry", { food: FOOD[c.kind] }) : t(["petLove1", "petLove2", "petLove3"][Math.floor(Math.random() * 3)]));
 		setTimeout(place, 60);
 	}
@@ -182,6 +199,8 @@
 		const fresh = Date.now() - (c.fed || 0) > 2 * HOUR;
 		save({ fed: Date.now(), treats: (c.treats || 0) + (fresh ? 1 : 0) });
 		hop();
+		voice("munch");
+		if (fresh) setTimeout(() => voice(), 800);
 		const r = home?.querySelector(".pet-body")?.getBoundingClientRect();
 		if (r) {
 			const f = el("span", { class: "pet-food" }, FOOD[c.kind]);
@@ -194,7 +213,8 @@
 		dialogRefresh();
 	}
 	function levelUp(n) {
-		hop();
+		setTimeout(() => show("flip"), 50);
+		voice("chime");
 		say(t("petGrew", { n: num(n) }), 6000);
 		const r = home?.querySelector(".pet-body")?.getBoundingClientRect();
 		if (r) Fx.confetti({ x: r.left + r.width / 2, y: r.top, count: 70, power: 420, colors: "party" });
@@ -205,10 +225,8 @@
 		if (!c.on) return;
 		const k = counts(c.since);
 		if (seen) {
-			if (k.tasks > seen.tasks) { hop(); say(t("petTask")); }
-			else if (k.habits > seen.habits) { hop(); say(t("petHabit")); }
-			else if (k.focus > seen.focus) { hop(); say(t("petFocus")); }
-			else if (k.journal > seen.journal) { hop(); say(t("petJournal")); }
+			const msg = k.tasks > seen.tasks ? "petTask" : k.habits > seen.habits ? "petHabit" : k.focus > seen.focus ? "petFocus" : k.journal > seen.journal ? "petJournal" : "";
+			if (msg) { show(); say(t(msg)); }
 		}
 		seen = k;
 	}
@@ -220,6 +238,44 @@
 		const msg = s.mood === "sleep" ? t("petSleepy") : s.hungry ? t("petHungry", { food: FOOD[c.kind] }) : Date.now() - last > 48 * HOUR ? t("petMiss") : t("petHi", { name: setting("name", "") || "" }).replace(/\s+!/, "!");
 		setTimeout(() => say(msg), 1800);
 	}
+
+	/* ---------- a life of its own: looks at the pointer, walks about, does tricks now and then ---------- */
+	const still = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+	let walkT = 0;
+	function walk() {
+		if (!home || still()) return;
+		const r = home.getBoundingClientRect();
+		const toCenter = r.left + r.width / 2 < innerWidth / 2 ? 1 : -1;
+		const dist = Math.min(260, innerWidth * 0.18);
+		home.style.setProperty("--walk", toCenter * dist + "px");
+		home.classList.remove("walking"); void home.offsetWidth; home.classList.add("walking");
+		clearTimeout(walkT);
+		walkT = setTimeout(stopWalk, 7000);
+	}
+	function stopWalk() { clearTimeout(walkT); home?.classList.remove("walking"); }
+	function idle() {
+		const c = cfg();
+		if (!c.on || !home || document.hidden || home.matches(":hover") || still() || document.querySelector("dialog[open]")) return;
+		if (stats(c).mood === "sleep") return;
+		const r = Math.random();
+		if (r < 0.35) walk();
+		else if (r < 0.75) PetFx.trick(home.querySelector(".pet-body"), c.kind);
+	}
+	(function loop() { setTimeout(() => { idle(); loop(); }, 14000 + Math.random() * 16000); })();
+	let lookRaf = 0, lastX = 0, lastY = 0;
+	document.addEventListener("pointermove", (e) => {
+		lastX = e.clientX; lastY = e.clientY;
+		if (lookRaf || !home) return;
+		lookRaf = requestAnimationFrame(() => {
+			lookRaf = 0;
+			const g = home?.querySelector(".pet-look"), svgEl = home?.querySelector(".pet-svg");
+			if (!g || !svgEl) return;
+			const b = svgEl.getBoundingClientRect();
+			const cx = b.left + b.width / 2, cy = b.top + b.height * 0.4;
+			const dx = lastX - cx, dy = lastY - cy, d = Math.hypot(dx, dy) || 1, k = Math.min(1, d / 260);
+			g.style.transform = `translate(${((dx / d) * 2.6 * k).toFixed(2)}px, ${((dy / d) * 2.2 * k).toFixed(2)}px)`;
+		});
+	}, { passive: true });
 
 	/* ---------- adopt and manage ---------- */
 	let dlg, pick = null;
@@ -244,6 +300,7 @@
 			b.append(el("span", {}, t("petK_" + k)));
 			return b;
 		}));
+		const snd = el("input", { type: "checkbox", checked: c.sound !== false });
 		const side = el("select", {}, el("option", { value: "start" }, t("petSideStart")), el("option", { value: "end" }, t("petSideEnd")));
 		side.value = c.side;
 		const body = el("div", { class: "dialog-body" },
@@ -252,12 +309,13 @@
 			on ? meter(c, s) : el("p", { class: "muted", style: "margin:0;line-height:1.8" }, t("petIntro")),
 			el("strong", {}, t("petChoose")), kinds,
 			el("div", { class: "pet-fields" }, el("label", {}, t("petName"), name), el("label", {}, t("petSide"), side)),
+			el("label", { class: "g-free" }, snd, " 🔊 " + t("petSound")),
 			el("p", { class: "muted small", style: "margin:0" }, t("petHow")),
 			el("div", { class: "dialog-actions" },
 				on ? el("button", { type: "button", class: "btn btn-ghost", onclick: () => { save({ on: false }); place(); dlg.close(); H.toast(t("petBye", { name: petName(c) })); card?.rebuild(); } }, t("petOff")) : el("span"),
 				el("span", { class: "grow" }),
 				el("button", { type: "button", class: "btn", onclick: () => {
-					const nc = { ...cfg(), on: true, kind, name: name.value.trim(), side: side.value };
+					const nc = { ...cfg(), on: true, kind, name: name.value.trim(), side: side.value, sound: snd.checked };
 					// Growth counts from the first adoption and stays when the pet is changed or turned off and on.
 					if (!c.since) nc.since = Date.now();
 					Store.setSetting("pet", nc);
@@ -317,6 +375,7 @@
 			el("div", { class: "fun-row", style: "gap:8px" },
 				el("button", { type: "button", class: "btn small", onclick: () => { feed(); card.rebuild(); } }, FOOD[c.kind] + " " + t("petFeed")),
 				el("button", { type: "button", class: "btn small", onclick: () => { love(); card.rebuild(); } }, "🤚 " + t("petPet")),
+				el("button", { type: "button", class: "btn small", onclick: (e) => { const b = e.target.closest(".fun-pet").querySelector(".pet-big"); PetFx.trick(b, cfg().kind); voice(); } }, "🎪 " + t("petTrick")),
 				el("button", { type: "button", class: "btn btn-ghost small", onclick: openDialog }, "⚙ " + t("petManage"))));
 	}
 	function buildCard() {
@@ -341,5 +400,5 @@
 		if (!invite()) setTimeout(tryAsk, 20000);
 	}, 9000);
 	H.openPet = openDialog;
-	window.Pet = { svg, stats, invite, openDialog, place, KINDS, say, feed, love };
+	window.Pet = { svg, stats, invite, openDialog, place, KINDS, say, feed, love, show, walk };
 })();
