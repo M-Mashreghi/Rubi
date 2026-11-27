@@ -14,6 +14,7 @@ The first public release of Rubi, a personal new-tab page for Chrome with no ads
 راهنمای کامل و انتقال از دستیار در [README](https://github.com/M-Mashreghi/Rubi#نصب) است. Full guide and Dastyar import: [README](https://github.com/M-Mashreghi/Rubi#install).
 
 ### تازه‌های این نسخه · New in this version
+- **۴.۳.۰** — 🎈 صفحه‌ی تازه‌ی «سرگرمی»: 📅 امروز در تاریخ با تاریخ شمسی و میلادی هر رویداد، روزشمار ایران باستان و آسمان روز؛ 🎉 جشن‌های خودکار تولد، نوروز (با لحظه‌ی دقیق تحویل سال)، سیزده‌به‌در، چهارشنبه‌سوری، یلدا و سال نو با کنفتی، آتش‌بازی و پوسته‌ی مخصوص؛ 🪶 ضرب‌المثل و شعر روز با معنی و تصویر استوری؛ 🏅 ۴۰ نشان و دستاورد قابل اشتراک · New Fun page: today in history with Persian and Gregorian dates, automatic celebrations (birthday, Nowruz with the exact new-year moment, Sizdah Bedar, Chaharshanbe Suri, Yalda, New Year), saying of the day with a story picture, and 40 shareable badges
 - **۴.۲.۱** — اتصال به گوگل درایو و تقویم گوگل در نسخه‌ی Chrome Web Store فعال شد · Google Drive and Google Calendar sign-in enabled in the store version
 - **۴.۲.۰** — روبی در Chrome Web Store: نسخه‌ی فروشگاه خودش به‌روز می‌شود (اگر تب روبی باز نباشد فوراً، وگرنه با یک دکمه)؛ نسخه‌هایی که از zip نصب شده‌اند کاربر را به فروشگاه راهنمایی می‌کنند · Rubi is on the Chrome Web Store and updates itself; zip copies point people to the store
 - **۴.۱.۱** — فایل zip حالا مستقیم برای Chrome Web Store آماده است (manifest در ریشه، بدون key) · The release zip is ready for the Chrome Web Store

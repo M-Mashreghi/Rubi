@@ -896,7 +896,7 @@ html.has-video body { background: transparent !important; }
 .daily-card { margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }
 .daily-tabs { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
 .daily-tabs .grow { flex: 1; }
-.daily-tab { border: 1px solid var(--border); background: transparent; color: var(--muted); border-radius: 999px; padding: 4px 11px; font-size: 12.5px; cursor: pointer; }
+.daily-tab { border: 1px solid var(--border); background: transparent; color: var(--muted); border-radius: 999px; padding: 4px 9px; font-size: 12.5px; cursor: pointer; }
 .daily-tab:hover { color: var(--text); }
 .daily-tab.active { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
 .daily-body { min-height: 70px; display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 2px 6px 4px; }

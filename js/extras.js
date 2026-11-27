@@ -53,7 +53,7 @@
 	}
 	async function drawDaily() {
 		document.querySelectorAll(".daily-tab").forEach((b) => b.classList.toggle("active", b.dataset.daily === tab));
-		$("dailyNext").hidden = tab === "fal";
+		$("dailyNext").hidden = tab === "fal" || tab === "hist";
 		const body = $("dailyBody");
 		if (tab === "quote") {
 			const list = quoteList();
@@ -74,6 +74,10 @@
 			} catch {
 				body.replaceChildren(el("p", { class: "error small" }, t("loadFail")));
 			}
+		} else if (tab === "hist") {
+			body.replaceChildren(H.historyPreview ? H.historyPreview(3) : "", el("button", { type: "button", class: "link-btn", onclick: () => H.openHistory?.() }, "📅 " + t("histOpen") + (I18n.rtl ? " ←" : " →")));
+		} else if (tab === "saying") {
+			body.replaceChildren(...(H.sayingView ? H.sayingView() : []));
 		} else {
 			body.replaceChildren(
 				el("p", { class: "fal-intro", dir: "auto" }, t("falIntro")),
@@ -86,6 +90,7 @@
 		if (!all) return toast(t("loadFail"));
 		const n = Math.floor(Math.random() * all.length);
 		const [lines, meaning] = all[n];
+		H.bump?.("fal");
 		const beyts = [];
 		for (let i = 0; i < lines.length; i += 2) beyts.push(el("div", { class: "beyt" }, el("span", {}, lines[i]), el("span", {}, lines[i + 1] || "")));
 		$("falBody").replaceChildren(
@@ -97,6 +102,7 @@
 		$("falBody").scrollTop = 0;
 	}
 	$("falAgain").addEventListener("click", openFal);
+	H.openFal = openFal;
 	document.querySelectorAll(".daily-tab").forEach((b) =>
 		b.addEventListener("click", () => {
 			tab = b.dataset.daily;
@@ -106,7 +112,8 @@
 		})
 	);
 	$("dailyNext").addEventListener("click", () => {
-		shift++;
+		if (tab === "saying") H.sayingNext?.();
+		else shift++;
 		drawDaily();
 	});
 

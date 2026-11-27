@@ -19,7 +19,7 @@
 	};
 
 	/* ---------- views (home / tools) ---------- */
-	const VIEWS = ["home", "apps", "tools", "plan"];
+	const VIEWS = ["home", "apps", "tools", "plan", "fun"];
 	let view = VIEWS.includes(ls.get("hamyar_view", "home")) ? ls.get("hamyar_view", "home") : "home";
 	function showView(v) {
 		view = v;
@@ -28,6 +28,7 @@
 		$("viewTools").hidden = v !== "tools";
 		$("viewApps").hidden = v !== "apps";
 		$("viewPlan").hidden = v !== "plan";
+		$("viewFun").hidden = v !== "fun";
 		// One tasks / notes panel, shown on the home page or beside the week planner.
 		const panel = document.querySelector(".side-panel");
 		const home = document.querySelector(".col-c");

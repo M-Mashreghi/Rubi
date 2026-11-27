@@ -6,7 +6,7 @@
 
 <p align="center">
   <img alt="Chrome MV3" src="https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white" />
-  <img alt="Version" src="https://img.shields.io/badge/version-4.2.1-6c4ff0" />
+  <img alt="Version" src="https://img.shields.io/badge/version-4.3.0-6c4ff0" />
   <img alt="Languages" src="https://img.shields.io/badge/languages-FA%20%7C%20EN%20%7C%20FR%20%7C%20DE-14b8a6" />
   <img alt="No ads" src="https://img.shields.io/badge/ads-none-3db985" />
   <img alt="No tracking" src="https://img.shields.io/badge/tracking-none-3db985" />
@@ -113,6 +113,30 @@
 <p align="center"><img src="docs/screenshots/translator-fa.png" alt="مترجم سریع" width="900" /></p>
 <p align="center"><img src="docs/screenshots/family-share-fa.png" alt="تقویم خانوادگی" width="900" /></p>
 <p align="center"><img src="docs/screenshots/season-yalda-fa.png" alt="پوسته‌ی یلدا" width="900" /></p>
+
+### 🎈 سرگرمی
+
+از دکمه‌ی 🎈 در نوار کناری یک صفحه‌ی تازه باز می‌شود، پر از چیزهای بامزه و دوست‌داشتنی. همه‌اش داخل خود روبی ساخته می‌شود و چیزی از اینترنت دریافت نمی‌کند.
+
+- **📅 امروز در تاریخ:** رویدادها، زادروزها و درگذشت‌های مهم ایران و جهان در همین روز؛ هر رویداد با تاریخ **شمسی و میلادی** خودش و اینکه چند سال پیش بوده. مناسبت‌های روز، نام روز در **گاه‌شماری ایران باستان** (مثلاً «روز خرداد از ماه آذر») و جشن‌های کهن مثل تیرگان و آذرگان، آسمان روز (برج خورشید، شکل ماه، طول روز در شهر شما، چندمین روز سال) و یک «می‌دانستید؟» تازه. با ‹ › روزهای دیگر را ببینید یا به هر تاریخی بروید. در صفحه‌ی اصلی هم زبانه‌ی «📅 امروز» دارد.
+- **🎉 جشن‌های خودکار:** روز تولد شما، نوروز، سیزده‌به‌در، چهارشنبه‌سوری، شب یلدا و سال نو میلادی. اولین تب آن روز یک صحنه‌ی جشن با کنفتی، آتش‌بازی، گلبرگ یا اخگر باز می‌کند و صفحه تمام روز ظاهر مخصوص خودش را دارد:
+  - **تولد:** کیک با شمع‌های سن شما که با یک کلیک فوت می‌شوند، بادکنک و آهنگ تولد.
+  - **نوروز:** سفره‌ی هفت‌سین با ماهی قرمز و سبزه، و **لحظه‌ی دقیق تحویل سال** (با محاسبه‌ی نجومی اعتدال بهاری) با شمارش معکوس ثانیه‌به‌ثانیه؛ از ۲۵ اسفند شمارش معکوس روی صفحه‌ی اصلی هم دیده می‌شود.
+  - **چهارشنبه‌سوری:** آتش و اخگر؛ با «بپر» از روی آتش بپرید: «زردی من از تو، سرخی تو از من».
+  - **یلدا:** ماه و ستاره، هندوانه و اناری که با یک کلیک باز می‌شود، طول بلندترین شب در شهر شما و فال حافظ یلدایی.
+  - **سیزده‌به‌در:** سبزه‌ای که گره می‌زنید و آرزو می‌کنید.
+  - در صفحه‌ی سرگرمی فهرست جشن‌های پیش رو با شمارش روزها و دکمه‌ی ▶ پیش‌نمایش هر کدام هست. صدای جشن پیش‌فرض خاموش است.
+- **🪶 ضرب‌المثل و شعر روز:** هر روز یک ضرب‌المثل یا بیتی از فردوسی، سعدی، مولوی، حافظ، خیام، نیما، سهراب، فروغ و … با **معنی** آن. با «📸 تصویر استوری» یک تصویر ۱۰۸۰×۱۹۲۰ با شش طرح رنگی و چهار قلم فارسی بسازید و ذخیره، کپی یا مستقیم هم‌رسانی کنید.
+- **🏅 نشان‌ها و دستاوردها:** ۴۰ نشان برنزی، نقره‌ای و طلایی برای کارهایی که در روبی می‌کنید؛ مثل «۷ روز تمرکز پشت‌سرهم»، «۳۰ فال حافظ»، «۱۰۰ کار انجام‌شده»، «سحرخیز» یا «جشن یلدا با روبی». هر نشان تازه با کنفتی خبر داده می‌شود و می‌شود آن را به‌صورت تصویر استوری به اشتراک گذاشت.
+
+<p align="center"><img src="docs/screenshots/fun-fa.png" alt="صفحه‌ی سرگرمی" width="900" /></p>
+<p align="center"><img src="docs/screenshots/history-fa.png" alt="امروز در تاریخ" width="900" /></p>
+<p align="center"><img src="docs/screenshots/celebrate-nowruz-fa.png" alt="جشن نوروز و لحظه‌ی تحویل سال" width="900" /></p>
+<p align="center"><img src="docs/screenshots/celebrate-birthday-fa.png" alt="جشن تولد" width="900" /></p>
+<p align="center"><img src="docs/screenshots/celebrate-yalda-fa.png" alt="شب یلدا" width="900" /></p>
+<p align="center"><img src="docs/screenshots/celebrate-suri-fa.png" alt="چهارشنبه‌سوری" width="900" /></p>
+<p align="center"><img src="docs/screenshots/story-fa.png" alt="تصویر استوری ضرب‌المثل روز" width="900" /></p>
+<p align="center"><img src="docs/screenshots/badges-fa.png" alt="نشان‌ها و دستاوردها" width="900" /></p>
 
 ### تقویم و مناسبت‌ها
 
@@ -338,6 +362,19 @@ Rubi is a **personal new-tab page for Google Chrome**. Every new tab shows your 
 <p align="center"><img src="docs/screenshots/season-yalda-fa.png" alt="Yalda look" width="900" /></p>
 <p align="center"><img src="docs/screenshots/planner-light-en.png" alt="Weekly planner" width="900" /></p>
 
+### Fun
+
+The 🎈 button on the side bar opens a page full of playful things. Everything is made inside Rubi; nothing is downloaded.
+
+- **📅 Today in history:** events, births and deaths from Iran and the world on this day, each with its own date in **both the Persian and the Gregorian calendar** and how many years ago it was. Also the day's occasions, the day's name in the **ancient Iranian calendar** and old festivals like Tirgan and Azargan, the sky (sun sign, moon phase, day length in your city, day of the year) and a "did you know?" line. Browse with ‹ › or jump to any date. The home page has a "📅 Today" tab too.
+- **🎉 Automatic celebrations:** your birthday, Nowruz, Sizdah Bedar, Chaharshanbe Suri, Yalda Night and New Year's Day. The first new tab of the day opens a scene with confetti, fireworks, petals or embers, and the page keeps a special look all day: a cake whose candles (your age) you blow out, with balloons and the birthday song; a Haft-Sin table with the **exact moment of the new year** (computed from the March equinox) and a live countdown, also shown on the home page from 25 Esfand; a bonfire to jump over; a pomegranate to open on Yalda with the length of the longest night in your city; a sabzeh to tie on Sizdah Bedar. The fun page lists the coming celebrations with a ▶ preview for each. Sounds are off by default.
+- **🪶 Saying of the day:** a Persian proverb or a couplet by Ferdowsi, Saadi, Rumi, Hafez, Khayyam, Nima, Sepehri, Forough and others, with its **meaning**. "📸 Story picture" makes a 1080×1920 image in six colour styles and four Persian fonts to save, copy or share.
+- **🏅 Badges and achievements:** 40 bronze, silver and gold badges for what you do in Rubi, such as "7 days of focus in a row", "30 Hafez fals", "100 tasks done", "Early bird" or "Celebrate Yalda with Rubi". New badges arrive with confetti and can be shared as a story picture.
+
+<p align="center"><img src="docs/screenshots/fun-fa.png" alt="Fun page" width="900" /></p>
+<p align="center"><img src="docs/screenshots/history-fa.png" alt="Today in history" width="900" /></p>
+<p align="center"><img src="docs/screenshots/celebrate-nowruz-fa.png" alt="Nowruz and the new year moment" width="900" /></p>
+
 ### Where your data lives
 
 | What | Where |
@@ -397,6 +434,7 @@ fonts/             Bundled fonts (SIL Open Font License)
 icons/             App icons, logo and brand logos for shortcuts
 wallpapers/        Ready-made wallpapers (1920×1080) and their thumbnails
 data/              Divan of Hafez with interpretations (MIT, see data/HAFEZ-LICENSE.txt)
+js/history-data.js Today in history: events, births and deaths with their dates; js/sayings-data.js: proverbs and couplets with meanings
 docs/screenshots/  Images used in this README
 ```
 

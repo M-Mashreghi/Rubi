@@ -16,6 +16,7 @@ function i18nParity() {
 	const sandbox = { window: {}, localStorage: { getItem: () => null }, document: { querySelectorAll: () => [], documentElement: { setAttribute() {}, lang: "" } }, navigator: { language: "fa" }, chrome: { storage: { local: { get: async () => ({}) } } } };
 	const fn = new Function(...Object.keys(sandbox), fs.readFileSync(path.join(EXT, "js/i18n.js"), "utf8"));
 	fn(...Object.values(sandbox));
+	new Function(...Object.keys(sandbox), fs.readFileSync(path.join(EXT, "js/i18n-fun.js"), "utf8"))(...Object.values(sandbox));
 	const D = sandbox.window.I18n.strings;
 	const all = new Set(Object.values(D).flatMap((x) => Object.keys(x)));
 	for (const l of Object.keys(D)) {
@@ -317,6 +318,49 @@ function i18nParity() {
 	check("server addresses map to countries inside the extension", geo.join(",") === "US,IR,DE,US,", geo);
 	const icon = await sw.evaluate(async () => { const d = await KamyarFlag.drawIcon("IR"); return [d[16].width, d[32].width]; });
 	check("flag icon is drawn at 16 and 32 px", icon.join() === "16,32", icon);
+
+	console.log("Fun page");
+	await page.evaluate(() => { document.querySelectorAll("dialog[open]").forEach((d) => d.close()); document.getElementById("celebrate")?.remove(); });
+	await page.click('.rail-btn[data-go="fun"]');
+	check("fun page opens with its cards", await page.evaluate(() => !document.getElementById("viewFun").hidden && ["history", "saying", "cele", "badges"].every((id) => document.getElementById("fun-" + id))));
+	const hist = await page.evaluate(async () => {
+		H.openHistory(new Date(2026, 10, 27, 12));
+		await new Promise((r) => setTimeout(r, 200));
+		const b = document.getElementById("histBody").textContent;
+		const r = [b.includes("Nobel"), /1895/.test(b) && /1274/.test(b), b.includes("Khordad")];
+		document.getElementById("histDialog").close();
+		return r;
+	});
+	check("today in history shows an event with both its Gregorian and Persian dates, and the ancient day name", hist.every(Boolean), hist);
+	const eq = await page.evaluate(() => [Celebrate.equinox(2026).toISOString(), Celebrate.equinox(2027).toISOString()]);
+	check("the new year moment is computed to the minute", Math.abs(new Date(eq[0]) - Date.UTC(2026, 2, 20, 14, 46)) < 120000 && Math.abs(new Date(eq[1]) - Date.UTC(2027, 2, 20, 20, 25)) < 120000, eq);
+	const suri = await page.evaluate(() => [Celebrate.todays(new Date(2027, 2, 16, 12)).some((c) => c.id === "suri"), Celebrate.todays(new Date(2026, 11, 21, 12)).some((c) => c.id === "yalda"), Celebrate.todays(new Date(2027, 2, 21, 12)).some((c) => c.id === "nowruz")]);
+	check("Chaharshanbe Suri, Yalda and Nowruz fall on the right days", suri.every(Boolean), suri);
+	const cele = await page.evaluate(async () => {
+		H.celebrate("birthday");
+		await new Promise((r) => setTimeout(r, 300));
+		const o = document.getElementById("celebrate");
+		const shown = !!o && !!o.querySelector(".cake");
+		o.querySelector(".cele-actions .btn").click();
+		await new Promise((r) => setTimeout(r, 200));
+		const blown = o.querySelector(".cake").classList.contains("out");
+		document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+		await new Promise((r) => setTimeout(r, 500));
+		return [shown, blown, !document.getElementById("celebrate")];
+	});
+	check("a birthday scene opens, the candles blow out, and Escape closes it", cele.every(Boolean), cele);
+	const story = await page.evaluate(async () => {
+		H.openStory();
+		await new Promise((r) => setTimeout(r, 1200));
+		const c = document.getElementById("storyCanvas");
+		const px = c.getContext("2d").getImageData(540, 960, 1, 1).data;
+		document.getElementById("storyDialog").close();
+		return [c.width === 1080 && c.height === 1920, px[3] === 255];
+	});
+	check("the saying of the day draws a 1080×1920 story picture", story.every(Boolean), story);
+	const badge = await page.evaluate(async () => { H.bump("fal"); await new Promise((r) => setTimeout(r, 400)); return !!(H.setting("badges", {}) || {}).fal1; });
+	check("a Hafez fal earns the first badge", badge);
+	await page.evaluate(() => { document.querySelectorAll(".badge-pop").forEach((c) => c.remove()); Fx.clear(); H.showView("home"); });
 
 	check("no page errors", errors.length === 0, errors);
 	await ctx.close();
