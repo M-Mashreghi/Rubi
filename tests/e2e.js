@@ -323,7 +323,7 @@ function i18nParity() {
 	console.log("Fun page");
 	await page.evaluate(() => { document.querySelectorAll("dialog[open]").forEach((d) => d.close()); document.getElementById("celebrate")?.remove(); });
 	await page.click('.rail-btn[data-go="fun"]');
-	check("fun page opens with its cards", await page.evaluate(() => !document.getElementById("viewFun").hidden && ["history", "saying", "cele", "badges", "games", "pet", "sky", "astro", "voice", "cam"].every((id) => document.getElementById("fun-" + id))));
+	check("fun page opens with its cards", await page.evaluate(() => !document.getElementById("viewFun").hidden && ["history", "saying", "cele", "badges", "games", "pet", "sky", "astro", "voice", "cam", "capsule", "fortune", "breathe"].every((id) => document.getElementById("fun-" + id))));
 	const hist = await page.evaluate(async () => {
 		H.openHistory(new Date(2026, 10, 27, 12));
 		await new Promise((r) => setTimeout(r, 200));
@@ -441,6 +441,58 @@ function i18nParity() {
 		return [off, on, !CamBg.stream, document.getElementById("camBg").hidden];
 	});
 	check("the camera background is off until turned on, shows the camera and turns it off again", cam.every(Boolean), cam);
+	const cap = await page.evaluate(async () => {
+		document.querySelectorAll("dialog[open]").forEach((d) => d.close());
+		Capsule.write();
+		const d = document.getElementById("capsuleDialog");
+		d.querySelector("textarea").value = "Dear future me";
+		const tomorrow = H.dayKey(new Date(Date.now() + 2 * 864e5));
+		d.querySelector("input[type=date]").value = tomorrow;
+		d.querySelector(".dialog-actions .btn").click();
+		await new Promise((r) => setTimeout(r, 400));
+		const sealed = Store.list("capsule").find((c) => c.text === "Dear future me");
+		const card = document.getElementById("fun-capsule");
+		const locked = !!sealed && sealed.openAt === tomorrow && !Capsule.due(sealed) && card.querySelector("li.sealed") && !card.querySelector("li.sealed .btn");
+		await new Promise((r) => setTimeout(r, 2500));
+		await Store.update(sealed.id, { openAt: H.dayKey() });
+		localStorage.removeItem("rubi_cap_seen");
+		Capsule.arrived();
+		const pop = document.querySelector(".care-card.cap-pop");
+		pop?.querySelector(".btn").click();
+		await new Promise((r) => setTimeout(r, 300));
+		const read = d.open && d.querySelector(".cap-body")?.textContent === "Dear future me" && Store.list("capsule").some((x) => x.id === sealed.id && x.opened);
+		d.close();
+		return [!!locked, !!pop, read, (H.funStats().capsules || 0) >= 1];
+	});
+	check("a time-capsule letter stays sealed until its day, then arrives and opens (kept with the synced data)", cap.every(Boolean), cap);
+	const fr = await page.evaluate(async () => {
+		const c = document.createElement("canvas"); c.width = c.height = 300; const x = c.getContext("2d");
+		x.fillStyle = "#eee4d6"; x.fillRect(0, 0, 300, 300); x.fillStyle = "#2b1a10";
+		[[90, 90, 30], [210, 140, 20], [150, 230, 35]].forEach(([a, b, r]) => { x.beginPath(); x.arc(a, b, r, 0, 7); x.fill(); });
+		const img = new Image(); img.src = c.toDataURL(); await img.decode();
+		const r = Fortune.readCup(img);
+		const blank = document.createElement("canvas"); blank.width = blank.height = 100; const bx = blank.getContext("2d"); bx.fillStyle = "#fff"; bx.fillRect(0, 0, 100, 100);
+		const bimg = new Image(); bimg.src = blank.toDataURL(); await bimg.decode();
+		const rb = Fortune.readCup(bimg);
+		Fortune.spread();
+		await new Promise((res) => setTimeout(res, 300));
+		const sp = document.querySelectorAll("#tarotDialog .tarot").length;
+		document.querySelectorAll("dialog[open]").forEach((d) => d.close());
+		const daily = Fortune.dailyIndex();
+		return [r.marks.length === 3, r.marks.every((m) => m.sym >= 0 && m.sym < FortuneData.coffee.length), rb.marks.length === 3, sp === 3, daily === Fortune.dailyIndex() && daily >= 0 && daily < 22, ["fa", "en", "fr", "de"].every((l) => FortuneData.text[l].tarot.length === 22 && FortuneData.text[l].coffee.length === FortuneData.coffee.length && FortuneData.text[l].ball.length === 20)];
+	});
+	check("fortunes: the coffee cup photo gives three readings, a three-card tarot spread and a steady card of the day", fr.every(Boolean), fr);
+	const br = await page.evaluate(async () => {
+		Store.setSetting("breathe", { pattern: "box", min: 1, sound: false });
+		Breathe.start();
+		await new Promise((r) => setTimeout(r, 1500));
+		const ov = document.getElementById("breathe");
+		const ok = Breathe.running && ov && ov.dataset.phase === "0" && ov.querySelector(".br-circle").classList.contains("big");
+		document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+		await new Promise((r) => setTimeout(r, 500));
+		return [!!ok, !Breathe.running, !document.getElementById("breathe")];
+	});
+	check("the breathing exercise grows the circle on the in-breath and stops with Esc", br.every(Boolean), br);
 	await page.evaluate(() => { Fx.clear(); document.querySelectorAll(".care-card").forEach((c) => c.remove()); H.showView("home"); });
 
 	check("no page errors", errors.length === 0, errors);

@@ -6,7 +6,7 @@
 
 <p align="center">
   <img alt="Chrome MV3" src="https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white" />
-  <img alt="Version" src="https://img.shields.io/badge/version-4.5.0-6c4ff0" />
+  <img alt="Version" src="https://img.shields.io/badge/version-4.6.0-6c4ff0" />
   <img alt="Languages" src="https://img.shields.io/badge/languages-FA%20%7C%20EN%20%7C%20FR%20%7C%20DE-14b8a6" />
   <img alt="No ads" src="https://img.shields.io/badge/ads-none-3db985" />
   <img alt="No tracking" src="https://img.shields.io/badge/tracking-none-3db985" />
@@ -133,6 +133,9 @@
 - **✨ طالع و برج من:** برج شما از روی تاریخ تولد (حمل، ثور، …) با عنصر، سیاره‌ی حاکم و ویژگی‌ها؛ طالع روزانه (امروز، دوستی و عشق، کار)، عدد و رنگ شانس و حال‌وهوای روز که برای هر برج تمام روز ثابت است؛ و سال حیوانی تولد شما و امسال در گاه‌شماری ایرانی (موش، گاو، پلنگ، … ۱۴۰۵ سال اسب). فقط برای سرگرمی!
 - **🎭 تغییر صدا:** تا ۳۰ ثانیه صدایتان را ضبط کنید یا یک فایل صوتی باز کنید و آن را با ۱۵ افکت بشنوید: ربات، دختر، زن، مرد، بچه، هیولا، خرس، گربه، پرنده، آدم فضایی، پژواک کوه، غار، رادیو، تلفن و برعکس. نتیجه را به‌صورت WAV ذخیره یا هم‌رسانی کنید. صدا فقط داخل همان صفحه پردازش می‌شود.
 - **📷 پس‌زمینه‌ی زنده با دوربین:** پیش‌فرض خاموش؛ با روشن کردنش (در صفحه‌ی سرگرمی یا تنظیمات › پس‌زمینه) کروم اجازه‌ی دوربین می‌خواهد و تصویر زنده‌ی شما پشت روبی پخش می‌شود، آینه‌ای یا نه، با حالت‌های طبیعی، کمی محو، سیاه‌وسفید، قدیمی، نئون و رؤیایی. تصویر ضبط یا فرستاده نمی‌شود و با بیرون رفتن از تب دوربین خاموش می‌شود.
+- **💌 کپسول زمان:** برای خودِ آینده‌تان نامه بنویسید و روز باز شدنش را انتخاب کنید (یک ماه، شش ماه، یک سال، پنج سال، نوروز بعد یا تولد بعدی). نامه تا آن روز مهر و موم می‌ماند و حتی خودتان هم نمی‌توانید بخوانیدش؛ روزش که برسد با پاکت و کنفتی می‌رسد. نامه‌ها همراه بقیه‌ی داده‌های روبی در گوگل درایو خودتان پشتیبان گرفته می‌شوند و روی کامپیوتر تازه برمی‌گردند.
+- **🔮 فال و طالع:** کارت تاروت روز و فال سه‌کارتی (گذشته، حال، آینده)؛ فال قهوه از عکس فنجان (روبی نقش‌های تیره‌ی فنجان را پیدا می‌کند و برای هر کدام نمادی می‌خواند، عکس فقط داخل صفحه بررسی می‌شود)؛ توپ جادویی برای سؤال‌های آره یا نه؛ و فال حافظ.
+- **🧘 تمرین تنفس:** دایره‌ای که با دم بزرگ و با بازدم کوچک می‌شود، با صدای ملایمی که همراه نفس اوج می‌گیرد. الگوهای آرام‌بخش، مربعی، ۴-۷-۸ برای خواب و متعادل، در ۱ تا ۱۰ دقیقه.
 - **🏅 نشان‌ها و دستاوردها:** ۴۰ نشان برنزی، نقره‌ای و طلایی برای کارهایی که در روبی می‌کنید؛ مثل «۷ روز تمرکز پشت‌سرهم»، «۳۰ فال حافظ»، «۱۰۰ کار انجام‌شده»، «سحرخیز» یا «جشن یلدا با روبی». هر نشان تازه با کنفتی خبر داده می‌شود و می‌شود آن را به‌صورت تصویر استوری به اشتراک گذاشت.
 
 <p align="center"><img src="docs/screenshots/fun-fa.png" alt="صفحه‌ی سرگرمی" width="900" /></p>
@@ -383,6 +386,9 @@ The 🎈 button on the side bar opens a page full of playful things. Everything 
 - **✨ My star sign:** your sign from your birthday with its element, ruling planet and traits; a daily horoscope (today, love and friends, work), lucky number, lucky colour and mood that stay the same all day for each sign; and the animal of your birth year and of this year in the Persian calendar (Rat, Ox, Leopard… 1405 is the year of the Horse). Just for fun!
 - **🎭 Voice changer:** record up to 30 seconds or open an audio file and hear it with 15 effects: robot, girl, woman, man, child, monster, bear, cat, bird, alien, mountain echo, cave, radio, phone and reverse. Save the result as a WAV or share it. The sound is processed in the page only.
 - **📷 Live camera background:** off by default. Turn it on (on the fun page or in Settings › Background), allow the camera, and your live picture plays behind Rubi, mirrored or not, with natural, soft blur, black and white, vintage, neon and dreamy looks. Nothing is recorded or sent, and the camera turns off when you leave the tab.
+- **💌 Time capsule:** write a letter to your future self and pick the day it opens (a month, six months, a year, five years, next Nowruz or your next birthday). It stays sealed until then, even to you, and arrives in an envelope with confetti. Letters are backed up with the rest of your Rubi data in your own Google Drive and come back on a new computer.
+- **🔮 Fortunes:** a tarot card of the day and a three-card spread (past, present, future), a coffee-cup reading from a photo (Rubi finds the dark shapes and reads a symbol for each; the photo stays in the page), a magic ball for yes-or-no questions, and Hafez.
+- **🧘 Breathing:** a circle that grows as you breathe in and shrinks as you breathe out, with a soft sound that swells with the breath. Calming, box, 4-7-8 for sleep and even patterns, for 1 to 10 minutes.
 - **🏅 Badges and achievements:** 40 bronze, silver and gold badges for what you do in Rubi, such as "7 days of focus in a row", "30 Hafez fals", "100 tasks done", "Early bird" or "Celebrate Yalda with Rubi". New badges arrive with confetti and can be shared as a story picture.
 
 <p align="center"><img src="docs/screenshots/fun-fa.png" alt="Fun page" width="900" /></p>
