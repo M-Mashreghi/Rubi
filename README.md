@@ -6,7 +6,7 @@
 
 <p align="center">
   <img alt="Chrome MV3" src="https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white" />
-  <img alt="Version" src="https://img.shields.io/badge/version-4.1.1-6c4ff0" />
+  <img alt="Version" src="https://img.shields.io/badge/version-4.2.0-6c4ff0" />
   <img alt="Languages" src="https://img.shields.io/badge/languages-FA%20%7C%20EN%20%7C%20FR%20%7C%20DE-14b8a6" />
   <img alt="No ads" src="https://img.shields.io/badge/ads-none-3db985" />
   <img alt="No tracking" src="https://img.shields.io/badge/tracking-none-3db985" />
@@ -189,7 +189,9 @@
 
 ## 📥 نصب
 
-> ⚠️ **روبی هنوز در فروشگاه کروم (Chrome Web Store) نیست، برای همین دستی نصب می‌شود. فقط چند دقیقه طول می‌کشد.**
+> ✅ **روبی در فروشگاه کروم است: [نصب از Chrome Web Store](https://chromewebstore.google.com/detail/ohpaebogaegajgcgeemadkdinfohpemp)** — با یک کلیک نصب می‌شود و خودش به‌روز می‌ماند.
+>
+> روش دستی پایین فقط برای کسی است که می‌خواهد روی کد کار کند؛ نسخه‌ی دستی خودکار به‌روز نمی‌شود.
 
 1. **دانلود: به صفحه‌ی [Releases](https://github.com/M-Mashreghi/Rubi/releases/latest) بروید و فایل `Rubi-v….zip` را دانلود کنید.**
 2. **باز کردن فایل: روی فایل zip راست‌کلیک کنید و Extract All را بزنید (در مک: دوبار کلیک). پوشه‌ی `Rubi` را جایی بگذارید که پاکش نکنید (مثلاً Documents)، چون کروم افزونه را از همین پوشه اجرا می‌کند.**
@@ -356,7 +358,8 @@ There is no server, and nothing is sent to us.
 ## 📥 Install
 
 > [!IMPORTANT]
-> **Rubi is not on the Chrome Web Store yet, so you install it by hand. It takes a few minutes.**
+> **Rubi is on the Chrome Web Store: [install it from there](https://chromewebstore.google.com/detail/ohpaebogaegajgcgeemadkdinfohpemp).** One click, and it keeps itself up to date.
+> The manual steps below are only for working on the code; a hand-installed copy doesn't update itself.
 
 1. **Download: go to [Releases](https://github.com/M-Mashreghi/Rubi/releases/latest) and download `Rubi-v….zip`.**
 2. **Unzip: right-click the zip and choose Extract All (on a Mac, double-click it). Keep the `Rubi` folder somewhere you won't delete, such as Documents, because Chrome runs the extension from it.**

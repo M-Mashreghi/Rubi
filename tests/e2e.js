@@ -51,6 +51,7 @@ function i18nParity() {
 		localStorage.setItem("kamyar_brief_day", new Date().toISOString().slice(0, 10));
 		localStorage.setItem("kamyar_week_shown", "x");
 		localStorage.setItem("kamyar_journal_nudge", "x");
+		if (!sessionStorage.getItem("promo-test")) localStorage.setItem("kamyar_upd_dismissed", "store");
 	});
 	const url = `chrome-extension://${id}/newtab.html`;
 
@@ -293,6 +294,23 @@ function i18nParity() {
 	check("English, French and German fonts are bundled", fonts.length === 4 && fonts.every(Boolean), fonts);
 	const glass = await page.evaluate(async () => { Store.setSetting("theme", "glass"); await new Promise((r) => setTimeout(r, 300)); const on = document.documentElement.classList.contains("theme-glass"); Store.setSetting("theme", "dark"); await new Promise((r) => setTimeout(r, 300)); return [on, !document.documentElement.classList.contains("theme-glass")]; });
 	check("glass theme switches on and off", glass.every(Boolean), glass);
+
+	console.log("Updates");
+	const upd = await page.evaluate(async () => {
+		localStorage.removeItem("kamyar_upd_dismissed");
+		await chrome.storage.local.set({ kamyar_update: null });
+		await new Promise((r) => setTimeout(r, 200));
+		location.hash = "";
+		return true;
+	});
+	await page.evaluate(() => sessionStorage.setItem("promo-test", "1"));
+	await page.reload(); await page.waitForTimeout(1200);
+	const promo = await page.evaluate(() => { const b = document.getElementById("updateBar"); return [!b.hidden, !!b.querySelector('a[href*="chromewebstore.google.com/detail/ohpaebogaegajgcgeemadkdinfohpemp"]')]; });
+	check("a copy from the zip points to the Chrome Web Store", promo.every(Boolean), promo);
+	await page.evaluate(async () => { await chrome.storage.local.set({ kamyar_update: { at: Date.now(), latest: "99.0.0", newer: true, store: true, ready: true } }); await new Promise((r) => setTimeout(r, 300)); });
+	const ready = await page.evaluate(() => { const b = document.getElementById("updateBar"); return [!b.hidden, b.textContent.includes("99.0.0")]; });
+	check("a downloaded store update offers Update now", ready.every(Boolean), ready);
+	await page.evaluate(async () => { await chrome.storage.local.set({ kamyar_update: null }); localStorage.setItem("kamyar_upd_dismissed", "store"); sessionStorage.removeItem("promo-test"); });
 
 	console.log("Site flag");
 	const geo = await sw.evaluate(async () => Promise.all(["8.8.8.8", "2.144.0.1", "2a01:4f8::1", "::ffff:8.8.4.4", "192.168.1.1"].map((ip) => KamyarFlag.countryOf(ip))));

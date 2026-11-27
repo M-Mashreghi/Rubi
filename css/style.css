@@ -1639,3 +1639,4 @@ html.theme-glass:not(.has-wall) :is(.card, .rail, .search-card, .apps-head, .til
 html.theme-glass:not(.has-wall) :is(.card, .rail, .search-card, .apps-head) > * { --surface: rgb(255 255 255 / .08); --surface-2: rgb(255 255 255 / .12); }
 html.theme-glass dialog { background: color-mix(in srgb, var(--surface) 82%, transparent); backdrop-filter: blur(24px) saturate(1.4); border: 1px solid var(--glass-edge); }
 html.has-wall :is(.card, .panel, .widget, .rail, .search-card, .side-panel, .apps-head, .tools-bar, .tiles) :is(.btn:not(.btn-ghost):not(.btn-danger), .search-go, .snd-play, .daily-tab.active, .side-tab.active[data-side="todo"], .snd-preset.active, .svc-tab.on, .apps-chip.svc-manage, .bday-chip.on) { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent); }
+.update-bar { top: auto; bottom: 16px; left: auto; transform: none; inset-inline-start: 84px; max-width: min(560px, calc(100vw - 168px)); }

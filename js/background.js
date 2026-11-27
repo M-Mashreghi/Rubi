@@ -357,15 +357,44 @@ chrome.notifications.onButtonClicked.addListener(async (nid, btn) => {
 	}
 });
 
-// Update notice for copies installed from the zip, checked once a week (Chrome Web Store copies update by themselves).
+// Updates. Copies from the Chrome Web Store update themselves: we ask Chrome to check every few hours and,
+// when a new version is there, restart into it straight away if no Rubi tab is open (otherwise the new-tab
+// page offers "Update now", and it happens by itself once the last Rubi tab closes).
+// Copies installed from the zip can't update themselves, so they look at GitHub and point people to the store.
 const REPO = "M-Mashreghi/Rubi";
+const STORE_URL = "https://chromewebstore.google.com/detail/ohpaebogaegajgcgeemadkdinfohpemp";
+const fromStore = () => !!chrome.runtime.getManifest().update_url;
 const newer = (a, b) => {
 	const x = String(a).replace(/^v/, "").split(".").map(Number), y = String(b).replace(/^v/, "").split(".").map(Number);
 	for (let i = 0; i < 3; i++) if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0);
 	return false;
 };
+async function rubiTabsOpen() {
+	try {
+		if (chrome.runtime.getContexts) return (await chrome.runtime.getContexts({ contextTypes: ["TAB"] })).length > 0;
+		const base = chrome.runtime.getURL("");
+		return (await chrome.tabs.query({})).some((t) => (t.url || t.pendingUrl || "").startsWith(base));
+	} catch { return true; }
+}
+async function applyStoreUpdate(version) {
+	await chrome.storage.local.set({ kamyar_update: { at: Date.now(), latest: version, newer: true, store: true, ready: true } });
+	if (!(await rubiTabsOpen())) chrome.runtime.reload();
+}
+if (chrome.runtime.onUpdateAvailable) chrome.runtime.onUpdateAvailable.addListener((d) => applyStoreUpdate(d.version));
+chrome.tabs.onRemoved.addListener(async () => {
+	const u = (await chrome.storage.local.get("kamyar_update")).kamyar_update;
+	if (u && u.ready && !(await rubiTabsOpen())) chrome.runtime.reload();
+});
 async function checkUpdate(force) {
-	if (chrome.runtime.getManifest().update_url) return;
+	if (fromStore()) {
+		try {
+			const r = await chrome.runtime.requestUpdateCheck();
+			const status = r && (r.status || r[0]), version = r && (r.version || (r[1] && r[1].version));
+			if (status === "update_available" && version) await applyStoreUpdate(version);
+			else await chrome.storage.local.set({ kamyar_update: { at: Date.now(), latest: chrome.runtime.getManifest().version, newer: false, store: true } });
+		} catch {}
+		return;
+	}
 	// Once a week is enough; the "check now" button in Settings › About skips the wait.
 	const last = (await chrome.storage.local.get("kamyar_update")).kamyar_update;
 	if (!force && last && last.at && Date.now() - last.at < 7 * 864e5) return;
@@ -374,11 +403,15 @@ async function checkUpdate(force) {
 		if (!r.ok) return;
 		const d = await r.json();
 		const ver = String(d.tag_name || "").replace(/^v/, "");
-		const zip = (d.assets || []).find((a) => /\.zip$/i.test(a.name));
-		await chrome.storage.local.set({ kamyar_update: { at: Date.now(), latest: ver, url: d.html_url, zip: zip ? zip.browser_download_url : "", newer: newer(ver, chrome.runtime.getManifest().version) } });
+		await chrome.storage.local.set({ kamyar_update: { at: Date.now(), latest: ver, url: STORE_URL, newer: newer(ver, chrome.runtime.getManifest().version) } });
 	} catch {}
 }
 chrome.runtime.onMessage.addListener((m, _s, reply) => {
+	if (m && m.type === "kamyar-update-now") {
+		// Rubi's open tabs close while it restarts, so open a fresh one when it's back.
+		chrome.storage.local.set({ kamyar_reopen: true }).then(() => chrome.runtime.reload());
+		return;
+	}
 	if (m && m.type === "kamyar-update-check") {
 		checkUpdate(true).then(() => reply(true));
 		return true;
@@ -399,6 +432,7 @@ const ensureKamyarAlarms = () => {
 chrome.runtime.onInstalled.addListener((d) => {
 	ensureKamyarAlarms();
 	if (d.reason === "update") chrome.storage.local.set({ kamyar_whatsnew: chrome.runtime.getManifest().version, kamyar_update: null });
+	chrome.storage.local.get("kamyar_reopen").then((r) => { if (r.kamyar_reopen) { chrome.storage.local.remove("kamyar_reopen"); chrome.tabs.create({}); } });
 });
 chrome.runtime.onStartup.addListener(ensureKamyarAlarms);
 

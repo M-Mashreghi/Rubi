@@ -123,24 +123,36 @@
 	const VER = globalThis.chrome?.runtime?.getManifest ? chrome.runtime.getManifest().version : "";
 	let dismissed = "";
 	try { dismissed = localStorage.getItem("kamyar_upd_dismissed") || ""; } catch {}
+	const STORE = "https://chromewebstore.google.com/detail/ohpaebogaegajgcgeemadkdinfohpemp";
+	const fromStore = !!(globalThis.chrome?.runtime?.getManifest && chrome.runtime.getManifest().update_url);
+	const updX = (key) => el("button", { type: "button", class: "care-x", title: t("close"), "aria-label": t("close"), onclick: () => { try { localStorage.setItem("kamyar_upd_dismissed", key); } catch {} dismissed = key; $("updateBar").hidden = true; } }, "✕");
 	function drawUpdate(u) {
 		const bar = $("updateBar");
-		if (u && u.newer && u.latest && u.latest !== dismissed) {
-			bar.replaceChildren(
-				el("span", {}, "🎁 "), el("span", { class: "grow" }, t("updAvail", { v: u.latest })),
-				el("a", { class: "btn small", href: u.url || "https://github.com/M-Mashreghi/Rubi/releases/latest", target: "_blank", rel: "noopener" }, t("updGet")),
-				el("button", { type: "button", class: "btn btn-ghost small", onclick: () => H.updateHelp(u) }, t("updHow")),
-				el("button", { type: "button", class: "care-x", title: t("close"), "aria-label": t("close"), onclick: () => { try { localStorage.setItem("kamyar_upd_dismissed", u.latest); } catch {} dismissed = u.latest; bar.hidden = true; } }, "✕"));
+		if (u && u.store && u.ready) {
+			// Store copy: the new version is downloaded; one click restarts Rubi into it.
+			bar.replaceChildren(el("span", {}, "🎁 "), el("span", { class: "grow" }, t("updReady", { v: u.latest })),
+				el("button", { type: "button", class: "btn small", onclick: () => chrome.runtime.sendMessage({ type: "kamyar-update-now" }) }, t("updNow")));
+			bar.hidden = false;
+		} else if (!fromStore && u && u.newer && u.latest && u.latest !== dismissed) {
+			bar.replaceChildren(el("span", {}, "🎁 "), el("span", { class: "grow" }, t("updAvail", { v: u.latest })),
+				el("a", { class: "btn small", href: STORE, target: "_blank", rel: "noopener" }, t("updStore")),
+				el("button", { type: "button", class: "btn btn-ghost small", onclick: () => H.updateHelp(u) }, t("updHow")), updX(u.latest));
+			bar.hidden = false;
+		} else if (!fromStore && globalThis.chrome?.runtime?.id && dismissed !== "store" && !(u && u.newer)) {
+			// A copy from the zip: Rubi is in the Chrome Web Store now, where it updates by itself.
+			bar.replaceChildren(el("span", {}, "🧩 "), el("span", { class: "grow" }, t("updStorePromo")),
+				el("a", { class: "btn small", href: STORE, target: "_blank", rel: "noopener" }, t("updStore")),
+				el("button", { type: "button", class: "btn btn-ghost small", onclick: () => H.updateHelp(u) }, t("updHow")), updX("store"));
 			bar.hidden = false;
 		} else bar.hidden = true;
-		$("updInfo").textContent = u && u.latest ? (u.newer ? t("updAvail", { v: u.latest }) : t("updLatest", { v: VER })) : t("updVersion", { v: VER });
+		$("updInfo").textContent = u && u.latest ? (u.newer ? t(u.store ? "updReady" : "updAvail", { v: u.latest }) : t("updLatest", { v: VER })) : t(fromStore ? "updAuto" : "updVersion", { v: VER });
 	}
 	H.updateHelp = (u) => {
-		const steps = el("ol", { class: "steps" }, ...["updStep1", "updStep2", "updStep3", "updStep4"].map((k) => el("li", {}, t(k))));
+		const steps = el("ol", { class: "steps" }, ...["updMove1", "updMove2", "updMove3", "updMove4"].map((k) => el("li", {}, t(k))));
 		const d = el("dialog", { class: "dialog small" }, el("div", { class: "dialog-body" },
-			el("h3", {}, t("updHowTitle")), steps, el("p", { class: "muted small" }, t("updDataSafe")),
+			el("h3", {}, t("updMoveTitle")), steps, el("p", { class: "muted small" }, t("updMoveSafe")),
 			el("div", { class: "dialog-actions" },
-				u && u.zip ? el("a", { class: "btn", href: u.zip }, t("updZip")) : "",
+				el("a", { class: "btn", href: STORE, target: "_blank", rel: "noopener" }, t("updStore")),
 				el("button", { type: "button", class: "btn btn-ghost", onclick: () => chrome.tabs.create({ url: "chrome://extensions" }) }, t("updOpenExt")),
 				el("button", { type: "button", class: "btn btn-ghost", onclick: () => d.close() }, t("close")))));
 		d.addEventListener("close", () => d.remove());
@@ -175,7 +187,7 @@
 			// After an update, say so once.
 			if (s.kamyar_whatsnew) {
 				chrome.storage.local.remove("kamyar_whatsnew");
-				toast(t("updDone", { v: s.kamyar_whatsnew }), { label: t("updWhatsNew"), run: () => window.open("https://github.com/M-Mashreghi/Rubi/releases/tag/v" + s.kamyar_whatsnew, "_blank", "noopener") });
+				toast(t("updDone", { v: s.kamyar_whatsnew }), { label: t("updWhatsNew"), run: () => window.open("https://github.com/M-Mashreghi/Rubi/releases", "_blank", "noopener") });
 			}
 		} else drawUpdate(null);
 		draw();
