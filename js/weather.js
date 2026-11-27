@@ -81,7 +81,7 @@
 		const d = data;
 		const c = d.current;
 		const [icon, label] = describe(c.weather_code, c.is_day);
-		H.wx = { icon, label: t(label), temp: n0(c.temperature_2m), city: city.name, hi: n0(d.daily.temperature_2m_max[0]), lo: n0(d.daily.temperature_2m_min[0]), aq: d.aq || null };
+		H.wx = { icon, label: t(label), temp: n0(c.temperature_2m), city: city.name, hi: n0(d.daily.temperature_2m_max[0]), lo: n0(d.daily.temperature_2m_min[0]), aq: d.aq || null, code: c.weather_code, isDay: c.is_day, wind: c.wind_speed_10m };
 		window.dispatchEvent(new Event("hamyar-wx"));
 		const dayFmt = new Intl.DateTimeFormat(I18n.locale, { weekday: "short", timeZone: "UTC" });
 		const days = el(

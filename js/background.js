@@ -28,6 +28,8 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 		const keys = Object.keys(log).sort();
 		while (keys.length > 366) delete log[keys.shift()];
 		await chrome.storage.local.set({ kamyar_pomo_log: log });
+		// The break games on the fun page open for the length of the break (plus a few minutes).
+		await chrome.storage.local.set({ rubi_break: { at: Date.now(), until: Date.now() + DUR[next] + 5 * MIN } });
 	}
 	const t = await bgT();
 	const title = s.mode === "focus" ? t("notifFocusDone") : t("notifBreakDone");

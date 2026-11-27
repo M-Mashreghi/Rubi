@@ -6,7 +6,7 @@
 
 <p align="center">
   <img alt="Chrome MV3" src="https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white" />
-  <img alt="Version" src="https://img.shields.io/badge/version-4.2.1-6c4ff0" />
+  <img alt="Version" src="https://img.shields.io/badge/version-4.7.0-6c4ff0" />
   <img alt="Languages" src="https://img.shields.io/badge/languages-FA%20%7C%20EN%20%7C%20FR%20%7C%20DE-14b8a6" />
   <img alt="No ads" src="https://img.shields.io/badge/ads-none-3db985" />
   <img alt="No tracking" src="https://img.shields.io/badge/tracking-none-3db985" />
@@ -113,6 +113,43 @@
 <p align="center"><img src="docs/screenshots/translator-fa.png" alt="مترجم سریع" width="900" /></p>
 <p align="center"><img src="docs/screenshots/family-share-fa.png" alt="تقویم خانوادگی" width="900" /></p>
 <p align="center"><img src="docs/screenshots/season-yalda-fa.png" alt="پوسته‌ی یلدا" width="900" /></p>
+
+### 🎈 سرگرمی
+
+از دکمه‌ی 🎈 در نوار کناری یک صفحه‌ی تازه باز می‌شود، پر از چیزهای بامزه و دوست‌داشتنی. همه‌اش داخل خود روبی ساخته می‌شود و چیزی از اینترنت دریافت نمی‌کند.
+
+- **📅 امروز در تاریخ:** رویدادها، زادروزها و درگذشت‌های مهم ایران و جهان در همین روز؛ هر رویداد با تاریخ **شمسی و میلادی** خودش و اینکه چند سال پیش بوده. مناسبت‌های روز، نام روز در **گاه‌شماری ایران باستان** (مثلاً «روز خرداد از ماه آذر») و جشن‌های کهن مثل تیرگان و آذرگان، آسمان روز (برج خورشید، شکل ماه، طول روز در شهر شما، چندمین روز سال) و یک «می‌دانستید؟» تازه. با ‹ › روزهای دیگر را ببینید یا به هر تاریخی بروید. در صفحه‌ی اصلی هم زبانه‌ی «📅 امروز» دارد.
+- **🎉 جشن‌های خودکار:** روز تولد شما، نوروز، سیزده‌به‌در، چهارشنبه‌سوری، شب یلدا و سال نو میلادی. اولین تب آن روز یک صحنه‌ی جشن با کنفتی، آتش‌بازی، گلبرگ یا اخگر باز می‌کند و صفحه تمام روز ظاهر مخصوص خودش را دارد:
+  - **تولد:** کیک با شمع‌های سن شما که با یک کلیک فوت می‌شوند، بادکنک و آهنگ تولد.
+  - **نوروز:** سفره‌ی هفت‌سین با ماهی قرمز و سبزه، و **لحظه‌ی دقیق تحویل سال** (با محاسبه‌ی نجومی اعتدال بهاری) با شمارش معکوس ثانیه‌به‌ثانیه؛ از ۲۵ اسفند شمارش معکوس روی صفحه‌ی اصلی هم دیده می‌شود.
+  - **چهارشنبه‌سوری:** آتش و اخگر؛ با «بپر» از روی آتش بپرید: «زردی من از تو، سرخی تو از من».
+  - **یلدا:** ماه و ستاره، هندوانه و اناری که با یک کلیک باز می‌شود، طول بلندترین شب در شهر شما و فال حافظ یلدایی.
+  - **سیزده‌به‌در:** سبزه‌ای که گره می‌زنید و آرزو می‌کنید.
+  - در صفحه‌ی سرگرمی فهرست جشن‌های پیش رو با شمارش روزها و دکمه‌ی ▶ پیش‌نمایش هر کدام هست. صدای جشن پیش‌فرض خاموش است.
+- **🪶 ضرب‌المثل و شعر روز:** هر روز یک ضرب‌المثل یا بیتی از فردوسی، سعدی، مولوی، حافظ، خیام، نیما، سهراب، فروغ و … با **معنی** آن. با «📸 تصویر استوری» یک تصویر ۱۰۸۰×۱۹۲۰ با شش طرح رنگی و چهار قلم فارسی بسازید و ذخیره، کپی یا مستقیم هم‌رسانی کنید.
+- **🎮 بازی‌های استراحت:** ۲۰۴۸ و مار. وقتی یک دور تمرکز تمام شود، به اندازه‌ی زمان استراحت باز می‌شوند و یک کارت «وقت استراحت!» دعوتتان می‌کند؛ وقت استراحت که تمام شد پیشنهاد برگشت به تمرکز می‌دهند (اگر بخواهید اول دستتان را تمام می‌کنید). با کلیدهای جهت یا کشیدن انگشت بازی می‌شوند، رکوردها نگه داشته می‌شود و اگر بخواهید می‌توانید آنها را همیشه باز بگذارید.
+- **🐾 حیوان خانگی:** پیش‌فرض خاموش است و روبی فقط یک بار می‌پرسد که می‌خواهید یا نه. گربه، سگ، طوطی، خرگوش، روباه، پاندا، پنگوئن یا همستر؛ اسم و گوشه‌ی صفحه‌اش را انتخاب کنید. با هر کار انجام‌شده، عادت، دور تمرکز و یادداشت سپاس‌گزاری بزرگ‌تر می‌شود (در سطح ۳ شال‌گردن، ۵ کلاه، ۷ عینک و ۱۰ تاج می‌گیرد)، پلک می‌زند، با چشم‌هایش موس شما را دنبال می‌کند، در صفحه راه می‌رود، شب‌ها می‌خوابد، با نوازش قلب می‌فرستد، غذا می‌خواهد و برای کارهایتان ذوق می‌کند. هر حیوان صدای خودش را دارد (میو و خرخر گربه، واق‌واق سگ، سوت طوطی، جیغ روباه، بوق پنگوئن، جیرجیر همستر و …) که داخل مرورگر ساخته می‌شود و فقط وقتی با او بازی می‌کنید پخش می‌شود، و حرکت‌های مخصوص خودش: گربه می‌پرد و کش‌وقوس می‌آید، سگ دور خودش می‌دود و پشتک می‌زند، طوطی می‌رقصد و سر تکان می‌دهد، خرگوش جست‌وخیز می‌کند، روباه دنبال دمش می‌چرخد، پاندا قل می‌خورد، پنگوئن تاتی‌تاتی می‌کند و روی شکم سُر می‌خورد. برای دیدن نمایش روی حیوان دوبار کلیک کنید یا 🎪 را بزنید. هر وقت بخواهید خاموشش کنید؛ پیشرفتش می‌ماند.
+- **🔭 آسمان شب:** شکل امشب ماه (با تصویر دقیق هلال)، درصد روشنایی و سن ماه، تاریخ ماه کامل و ماه نو بعدی، طلوع و غروب شهر شما، و فهرست رویدادهای پیش رو در آسمان: بارش‌های شهابی (برساوشی، جوزایی، …) با تعداد شهاب در ساعت و خورشیدگرفتگی‌ها و ماه‌گرفتگی‌های ۲۰۲۶ تا ۲۰۲۸، با تاریخ شمسی و میلادی.
+- **✨ طالع و برج من:** برج شما از روی تاریخ تولد (حمل، ثور، …) با عنصر، سیاره‌ی حاکم و ویژگی‌ها؛ طالع روزانه (امروز، دوستی و عشق، کار)، عدد و رنگ شانس و حال‌وهوای روز که برای هر برج تمام روز ثابت است؛ و سال حیوانی تولد شما و امسال در گاه‌شماری ایرانی (موش، گاو، پلنگ، … ۱۴۰۵ سال اسب). فقط برای سرگرمی!
+- **🎭 تغییر صدا:** تا ۳۰ ثانیه صدایتان را ضبط کنید یا یک فایل صوتی باز کنید و آن را با ۱۵ افکت بشنوید: ربات، دختر، زن، مرد، بچه، هیولا، خرس، گربه، پرنده، آدم فضایی، پژواک کوه، غار، رادیو، تلفن و برعکس. نتیجه را به‌صورت WAV ذخیره یا هم‌رسانی کنید. صدا فقط داخل همان صفحه پردازش می‌شود.
+- **📷 پس‌زمینه‌ی زنده با دوربین:** پیش‌فرض خاموش؛ با روشن کردنش (در صفحه‌ی سرگرمی یا تنظیمات › پس‌زمینه) کروم اجازه‌ی دوربین می‌خواهد و تصویر زنده‌ی شما پشت روبی پخش می‌شود، آینه‌ای یا نه، با حالت‌های طبیعی، کمی محو، سیاه‌وسفید، قدیمی، نئون و رؤیایی. تصویر ضبط یا فرستاده نمی‌شود و با بیرون رفتن از تب دوربین خاموش می‌شود.
+- **💌 کپسول زمان:** برای خودِ آینده‌تان نامه بنویسید و روز باز شدنش را انتخاب کنید (یک ماه، شش ماه، یک سال، پنج سال، نوروز بعد یا تولد بعدی). نامه تا آن روز مهر و موم می‌ماند و حتی خودتان هم نمی‌توانید بخوانیدش؛ روزش که برسد با پاکت و کنفتی می‌رسد. نامه‌ها همراه بقیه‌ی داده‌های روبی در گوگل درایو خودتان پشتیبان گرفته می‌شوند و روی کامپیوتر تازه برمی‌گردند.
+- **🔮 فال و طالع:** کارت تاروت روز و فال سه‌کارتی (گذشته، حال، آینده)؛ فال قهوه از عکس فنجان (روبی نقش‌های تیره‌ی فنجان را پیدا می‌کند و برای هر کدام نمادی می‌خواند، عکس فقط داخل صفحه بررسی می‌شود)؛ توپ جادویی برای سؤال‌های آره یا نه؛ و فال حافظ.
+- **🧘 تمرین تنفس:** دایره‌ای که با دم بزرگ و با بازدم کوچک می‌شود، با صدای ملایمی که همراه نفس اوج می‌گیرد. الگوهای آرام‌بخش، مربعی، ۴-۷-۸ برای خواب و متعادل، در ۱ تا ۱۰ دقیقه.
+- **🌦️ آب‌وهوای زنده:** پشت باکس‌ها همان هوای شهر شما دیده می‌شود: باران با قطره‌هایی که روی زمین می‌پاشند و با باد کج می‌شوند، نم‌نم، برف، طوفان با رعد و برق، مه و ابرهای روان؛ و شب‌ها ستاره‌های چشمک‌زن، ماه با شکل واقعی امشب و گاهی یک شهاب. پیش‌فرض ملایم است، می‌شود کاملش کرد یا خاموشش کرد، و هر صحنه را ۱۲ ثانیه امتحان کرد. وقتی تب پنهان است متوقف می‌شود.
+- **🎼 آهنگ‌ساز کوچک:** با کیبورد سنتور (با ریز وقتی کلید را نگه دارید)، پیانو یا نی بزنید، در دستگاه‌های شور، ماهور، همایون، سه‌گاه، چهارگاه، نوا، راست‌پنجگاه و آواز اصفهان با ربع‌پرده‌ها (کرن). سه ردیف کیبورد سه اُکتاو دستگاه‌اند، پس هر کلیدی بزنید در دستگاه است. آهنگ را ضبط، پخش، نگه‌داری و به‌صورت WAV ذخیره کنید؛ دکمه‌ی «بشنو» رنگ هر دستگاه را نشان می‌دهد.
+- **🏅 نشان‌ها و دستاوردها:** ۴۰ نشان برنزی، نقره‌ای و طلایی برای کارهایی که در روبی می‌کنید؛ مثل «۷ روز تمرکز پشت‌سرهم»، «۳۰ فال حافظ»، «۱۰۰ کار انجام‌شده»، «سحرخیز» یا «جشن یلدا با روبی». هر نشان تازه با کنفتی خبر داده می‌شود و می‌شود آن را به‌صورت تصویر استوری به اشتراک گذاشت.
+
+<p align="center"><img src="docs/screenshots/fun-fa.png" alt="صفحه‌ی سرگرمی" width="900" /></p>
+<p align="center"><img src="docs/screenshots/history-fa.png" alt="امروز در تاریخ" width="900" /></p>
+<p align="center"><img src="docs/screenshots/games-2048-fa.png" alt="بازی ۲۰۴۸ در زمان استراحت" width="440" /> <img src="docs/screenshots/pet-adopt-fa.png" alt="انتخاب حیوان خانگی" width="440" /></p>
+<p align="center"><img src="docs/screenshots/sky-fa.png" alt="آسمان شب و طالع" width="900" /></p>
+<p align="center"><img src="docs/screenshots/celebrate-nowruz-fa.png" alt="جشن نوروز و لحظه‌ی تحویل سال" width="900" /></p>
+<p align="center"><img src="docs/screenshots/celebrate-birthday-fa.png" alt="جشن تولد" width="900" /></p>
+<p align="center"><img src="docs/screenshots/celebrate-yalda-fa.png" alt="شب یلدا" width="900" /></p>
+<p align="center"><img src="docs/screenshots/celebrate-suri-fa.png" alt="چهارشنبه‌سوری" width="900" /></p>
+<p align="center"><img src="docs/screenshots/story-fa.png" alt="تصویر استوری ضرب‌المثل روز" width="900" /></p>
+<p align="center"><img src="docs/screenshots/badges-fa.png" alt="نشان‌ها و دستاوردها" width="900" /></p>
 
 ### تقویم و مناسبت‌ها
 
@@ -338,6 +375,32 @@ Rubi is a **personal new-tab page for Google Chrome**. Every new tab shows your 
 <p align="center"><img src="docs/screenshots/season-yalda-fa.png" alt="Yalda look" width="900" /></p>
 <p align="center"><img src="docs/screenshots/planner-light-en.png" alt="Weekly planner" width="900" /></p>
 
+### Fun
+
+The 🎈 button on the side bar opens a page full of playful things. Everything is made inside Rubi; nothing is downloaded.
+
+- **📅 Today in history:** events, births and deaths from Iran and the world on this day, each with its own date in **both the Persian and the Gregorian calendar** and how many years ago it was. Also the day's occasions, the day's name in the **ancient Iranian calendar** and old festivals like Tirgan and Azargan, the sky (sun sign, moon phase, day length in your city, day of the year) and a "did you know?" line. Browse with ‹ › or jump to any date. The home page has a "📅 Today" tab too.
+- **🎉 Automatic celebrations:** your birthday, Nowruz, Sizdah Bedar, Chaharshanbe Suri, Yalda Night and New Year's Day. The first new tab of the day opens a scene with confetti, fireworks, petals or embers, and the page keeps a special look all day: a cake whose candles (your age) you blow out, with balloons and the birthday song; a Haft-Sin table with the **exact moment of the new year** (computed from the March equinox) and a live countdown, also shown on the home page from 25 Esfand; a bonfire to jump over; a pomegranate to open on Yalda with the length of the longest night in your city; a sabzeh to tie on Sizdah Bedar. The fun page lists the coming celebrations with a ▶ preview for each. Sounds are off by default.
+- **🪶 Saying of the day:** a Persian proverb or a couplet by Ferdowsi, Saadi, Rumi, Hafez, Khayyam, Nima, Sepehri, Forough and others, with its **meaning**. "📸 Story picture" makes a 1080×1920 image in six colour styles and four Persian fonts to save, copy or share.
+- **🎮 Break games:** 2048 and Snake. They open when a focus session ends, for as long as the break, with a "Break time!" card; when the break is over they offer to take you back to focus (you can finish the round first). Play with the arrow keys or a swipe; best scores are kept, and you can choose to always allow them.
+- **🐾 Virtual pet:** off by default; Rubi asks once whether you want one. A cat, dog, parrot, rabbit, fox, panda, penguin or hamster with a name you choose lives in a corner of the page. It grows with every finished task, habit, focus session and gratitude note (a scarf at level 3, a hat at 5, glasses at 7, a crown at 10), blinks, follows your pointer with its eyes, walks about, sleeps at night, sends hearts when petted, asks for food and cheers when you get things done. Each animal has its own voice (meow and purr, bark, parrot whistle, fox yip, penguin honk, hamster squeak…), made in the browser and played only when you play with it, and its own tricks: the cat pounces and stretches, the dog does zoomies and backflips, the parrot dances and headbangs, the rabbit does binkies, the fox chases its tail, the panda rolls, the penguin waddles and belly-slides, the hamster rolls. Double-click it or press 🎪 for a trick. Turn it off any time; its progress stays.
+- **🔭 Night sky:** tonight's moon (drawn to its real phase), how much of it is lit and its age, the next full and new moon, sunrise and sunset in your city, and what's coming up in the sky: meteor showers (Perseids, Geminids…) with meteors an hour, and the solar and lunar eclipses of 2026 to 2028, with Persian and Gregorian dates.
+- **✨ My star sign:** your sign from your birthday with its element, ruling planet and traits; a daily horoscope (today, love and friends, work), lucky number, lucky colour and mood that stay the same all day for each sign; and the animal of your birth year and of this year in the Persian calendar (Rat, Ox, Leopard… 1405 is the year of the Horse). Just for fun!
+- **🎭 Voice changer:** record up to 30 seconds or open an audio file and hear it with 15 effects: robot, girl, woman, man, child, monster, bear, cat, bird, alien, mountain echo, cave, radio, phone and reverse. Save the result as a WAV or share it. The sound is processed in the page only.
+- **📷 Live camera background:** off by default. Turn it on (on the fun page or in Settings › Background), allow the camera, and your live picture plays behind Rubi, mirrored or not, with natural, soft blur, black and white, vintage, neon and dreamy looks. Nothing is recorded or sent, and the camera turns off when you leave the tab.
+- **💌 Time capsule:** write a letter to your future self and pick the day it opens (a month, six months, a year, five years, next Nowruz or your next birthday). It stays sealed until then, even to you, and arrives in an envelope with confetti. Letters are backed up with the rest of your Rubi data in your own Google Drive and come back on a new computer.
+- **🔮 Fortunes:** a tarot card of the day and a three-card spread (past, present, future), a coffee-cup reading from a photo (Rubi finds the dark shapes and reads a symbol for each; the photo stays in the page), a magic ball for yes-or-no questions, and Hafez.
+- **🧘 Breathing:** a circle that grows as you breathe in and shrinks as you breathe out, with a soft sound that swells with the breath. Calming, box, 4-7-8 for sleep and even patterns, for 1 to 10 minutes.
+- **🌦️ Live weather:** behind the boxes you see your city's real weather: rain that splashes and leans with the wind, drizzle, snow, a storm with lightning, fog and drifting clouds; and at night twinkling stars, tonight's real moon shape and the odd shooting star. Soft by default, can be made full or turned off, and each scene can be tried for 12 seconds. It pauses when the tab is hidden.
+- **🎼 Little composer:** play santour (hold a key for the riz tremolo), piano or ney from your keyboard in Shur, Mahur, Homayun, Segah, Chahargah, Nava, Rast-Panjgah and Esfahan, with quarter tones (koron). The three keyboard rows are three octaves of the mode, so every key fits. Record, play back, keep and save as WAV; "Listen" plays a phrase that shows each dastgah's colour.
+- **🏅 Badges and achievements:** 40 bronze, silver and gold badges for what you do in Rubi, such as "7 days of focus in a row", "30 Hafez fals", "100 tasks done", "Early bird" or "Celebrate Yalda with Rubi". New badges arrive with confetti and can be shared as a story picture.
+
+<p align="center"><img src="docs/screenshots/fun-fa.png" alt="Fun page" width="900" /></p>
+<p align="center"><img src="docs/screenshots/history-fa.png" alt="Today in history" width="900" /></p>
+<p align="center"><img src="docs/screenshots/celebrate-nowruz-fa.png" alt="Nowruz and the new year moment" width="900" /></p>
+<p align="center"><img src="docs/screenshots/games-2048-fa.png" alt="2048 on a break" width="440" /> <img src="docs/screenshots/pet-adopt-fa.png" alt="Choosing a pet" width="440" /></p>
+<p align="center"><img src="docs/screenshots/sky-fa.png" alt="Night sky and star sign" width="900" /></p>
+
 ### Where your data lives
 
 | What | Where |
@@ -397,6 +460,7 @@ fonts/             Bundled fonts (SIL Open Font License)
 icons/             App icons, logo and brand logos for shortcuts
 wallpapers/        Ready-made wallpapers (1920×1080) and their thumbnails
 data/              Divan of Hafez with interpretations (MIT, see data/HAFEZ-LICENSE.txt)
+js/history-data.js Today in history: events, births and deaths with their dates; js/sayings-data.js: proverbs and couplets with meanings
 docs/screenshots/  Images used in this README
 ```
 

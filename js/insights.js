@@ -124,7 +124,7 @@
 		if (setting("weekAuto", true) === false || d.getDay() !== endDay || d.getHours() < 18) return;
 		let shown = null;
 		try { shown = localStorage.getItem("kamyar_week_shown"); } catch {}
-		if (shown === weekId(d) || document.querySelector("dialog[open]") || H.tourOpen?.() || document.documentElement.classList.contains("focus-on")) return;
+		if (shown === weekId(d) || document.querySelector("dialog[open]") || document.getElementById("celebrate") || H.tourOpen?.() || document.documentElement.classList.contains("focus-on")) return;
 		try { localStorage.setItem("kamyar_week_shown", weekId(d)); } catch {}
 		openWeek();
 	}

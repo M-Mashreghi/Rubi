@@ -7,6 +7,7 @@
 	<link rel="icon" href="icons/icon-32.png" />
 	<link rel="stylesheet" href="css/fonts.css" />
 	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="css/fun.css" />
 	<script src="js/themes.js"></script>
 	<script src="js/theme-preload.js"></script>
 </head>
@@ -19,6 +20,7 @@
 		<button class="rail-btn" data-go="tools" type="button" data-tip="wTools"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.1L3.6 17.1a1.5 1.5 0 0 0 2.1 2.1l5.7-5.7a4 4 0 0 0 5.1-5.4l-2.5 2.5-2-.5-.5-2z"/></svg></button>
 		<button class="rail-btn" data-go="plan" type="button" data-tip="tasksAndNotes"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="m8 12 3 3 5-6"/></svg></button>
 		<button class="rail-btn" data-go="cal" type="button" data-tip="addEventTip"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/></svg></button>
+		<button class="rail-btn" data-go="fun" type="button" data-tip="funTitle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c3.6 0 6 2.8 6 6.2 0 3.9-3.2 7.3-6 7.3s-6-3.4-6-7.3c0-3.4 2.4-6.2 6-6.2Z"/><path d="m11 16-1 2h4l-1-2M12 18c0 1.5-1.5 2-1 3.5"/><path d="M9.2 6.6c.5-.9 1.3-1.4 2.2-1.6"/></svg></button>
 		<span class="grow"></span>
 		<button id="syncChip" class="rail-btn sync" type="button" aria-live="polite"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18h10a4 4 0 0 0 .5-7.97A6 6 0 0 0 6 9.5 4.25 4.25 0 0 0 7 18Z"/></svg><span class="dot"></span><span id="syncText" class="rail-tip"></span></button>
 		<button id="settingsBtn" class="rail-btn avatar" type="button" data-tip="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg></button>
@@ -90,6 +92,8 @@
 					<button class="daily-tab" data-daily="quote" type="button" role="tab"><span>💡</span> <span data-i18n="dailyQuote"></span></button>
 					<button class="daily-tab" data-daily="poem" type="button" role="tab"><span>📜</span> <span data-i18n="dailyPoem"></span></button>
 					<button class="daily-tab" data-daily="fal" type="button" role="tab"><span>🔮</span> <span data-i18n="hafezFal"></span></button>
+					<button class="daily-tab" data-daily="saying" type="button" role="tab"><span>🪶</span> <span data-i18n="sayTab"></span></button>
+					<button class="daily-tab" data-daily="hist" type="button" role="tab"><span>📅</span> <span data-i18n="histTab"></span></button>
 					<span class="grow"></span>
 					<button id="dailyNext" class="icon-btn small" type="button" data-i18n-title="another">↻</button>
 				</div>
@@ -135,6 +139,11 @@
 	</main>
 
 	<main id="viewApps" class="view apps-view" hidden></main>
+
+	<main id="viewFun" class="view fun-view" hidden>
+		<div class="fun-top"><h1 class="fun-h1">🎈 <span data-i18n="funTitle"></span></h1><p class="muted small" data-i18n="funIntro"></p></div>
+		<div id="funGrid" class="fun-grid"></div>
+	</main>
 
 	<main id="viewPlan" class="view plan-view" hidden>
 		<div class="plan-top">
@@ -1023,6 +1032,7 @@
 	<div id="toast" class="toast" role="status" hidden></div>
 
 	<script src="js/i18n.js"></script>
+	<script src="js/i18n-fun.js"></script>
 	<script src="js/store.js"></script>
 	<script src="js/drive.js"></script>
 	<script src="js/chromesync.js"></script>
@@ -1064,5 +1074,26 @@
 	<script src="js/manage.js"></script>
 	<script src="js/salat.js"></script>
 	<script src="js/setup.js"></script>
+	<script src="js/fx.js"></script>
+	<script src="js/fun.js"></script>
+	<script src="js/history-data.js"></script>
+	<script src="js/history.js"></script>
+	<script src="js/celebrate.js"></script>
+	<script src="js/sayings-data.js"></script>
+	<script src="js/saying.js"></script>
+	<script src="js/badges.js"></script>
+	<script src="js/games.js"></script>
+	<script src="js/pet-fx.js"></script>
+	<script src="js/pet.js"></script>
+	<script src="js/sky-data.js"></script>
+	<script src="js/sky.js"></script>
+	<script src="js/voice.js"></script>
+	<script src="js/cam.js"></script>
+	<script src="js/capsule.js"></script>
+	<script src="js/fortune-data.js"></script>
+	<script src="js/fortune.js"></script>
+	<script src="js/breathe.js"></script>
+	<script src="js/wxscene.js"></script>
+	<script src="js/composer.js"></script>
 </body>
 </html>

@@ -16,6 +16,7 @@ function i18nParity() {
 	const sandbox = { window: {}, localStorage: { getItem: () => null }, document: { querySelectorAll: () => [], documentElement: { setAttribute() {}, lang: "" } }, navigator: { language: "fa" }, chrome: { storage: { local: { get: async () => ({}) } } } };
 	const fn = new Function(...Object.keys(sandbox), fs.readFileSync(path.join(EXT, "js/i18n.js"), "utf8"));
 	fn(...Object.values(sandbox));
+	new Function(...Object.keys(sandbox), fs.readFileSync(path.join(EXT, "js/i18n-fun.js"), "utf8"))(...Object.values(sandbox));
 	const D = sandbox.window.I18n.strings;
 	const all = new Set(Object.values(D).flatMap((x) => Object.keys(x)));
 	for (const l of Object.keys(D)) {
@@ -30,7 +31,8 @@ function i18nParity() {
 
 	const ctx = await chromium.launchPersistentContext("", {
 		headless: true, channel: "chromium",
-		args: [`--disable-extensions-except=${EXT}`, `--load-extension=${EXT}`],
+		// A fake camera and microphone that are allowed without a prompt, for the voice changer and camera background.
+		args: [`--disable-extensions-except=${EXT}`, `--load-extension=${EXT}`, "--use-fake-device-for-media-stream", "--use-fake-ui-for-media-stream"],
 		viewport: { width: 1440, height: 900 }
 	});
 	const sw = ctx.serviceWorkers()[0] || (await ctx.waitForEvent("serviceworker", { timeout: 20000 }));
@@ -317,6 +319,215 @@ function i18nParity() {
 	check("server addresses map to countries inside the extension", geo.join(",") === "US,IR,DE,US,", geo);
 	const icon = await sw.evaluate(async () => { const d = await KamyarFlag.drawIcon("IR"); return [d[16].width, d[32].width]; });
 	check("flag icon is drawn at 16 and 32 px", icon.join() === "16,32", icon);
+
+	console.log("Fun page");
+	await page.evaluate(() => { document.querySelectorAll("dialog[open]").forEach((d) => d.close()); document.getElementById("celebrate")?.remove(); });
+	await page.click('.rail-btn[data-go="fun"]');
+	check("fun page opens with its cards", await page.evaluate(() => !document.getElementById("viewFun").hidden && ["history", "saying", "cele", "badges", "games", "pet", "sky", "astro", "voice", "cam", "capsule", "fortune", "breathe", "wxscene", "composer"].every((id) => document.getElementById("fun-" + id))));
+	const hist = await page.evaluate(async () => {
+		H.openHistory(new Date(2026, 10, 27, 12));
+		await new Promise((r) => setTimeout(r, 200));
+		const b = document.getElementById("histBody").textContent;
+		const r = [b.includes("Nobel"), /1895/.test(b) && /1274/.test(b), b.includes("Khordad")];
+		document.getElementById("histDialog").close();
+		return r;
+	});
+	check("today in history shows an event with both its Gregorian and Persian dates, and the ancient day name", hist.every(Boolean), hist);
+	const eq = await page.evaluate(() => [Celebrate.equinox(2026).toISOString(), Celebrate.equinox(2027).toISOString()]);
+	check("the new year moment is computed to the minute", Math.abs(new Date(eq[0]) - Date.UTC(2026, 2, 20, 14, 46)) < 120000 && Math.abs(new Date(eq[1]) - Date.UTC(2027, 2, 20, 20, 25)) < 120000, eq);
+	const suri = await page.evaluate(() => [Celebrate.todays(new Date(2027, 2, 16, 12)).some((c) => c.id === "suri"), Celebrate.todays(new Date(2026, 11, 21, 12)).some((c) => c.id === "yalda"), Celebrate.todays(new Date(2027, 2, 21, 12)).some((c) => c.id === "nowruz")]);
+	check("Chaharshanbe Suri, Yalda and Nowruz fall on the right days", suri.every(Boolean), suri);
+	const cele = await page.evaluate(async () => {
+		H.celebrate("birthday");
+		await new Promise((r) => setTimeout(r, 300));
+		const o = document.getElementById("celebrate");
+		const shown = !!o && !!o.querySelector(".cake");
+		o.querySelector(".cele-actions .btn").click();
+		await new Promise((r) => setTimeout(r, 200));
+		const blown = o.querySelector(".cake").classList.contains("out");
+		document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+		await new Promise((r) => setTimeout(r, 500));
+		return [shown, blown, !document.getElementById("celebrate")];
+	});
+	check("a birthday scene opens, the candles blow out, and Escape closes it", cele.every(Boolean), cele);
+	const story = await page.evaluate(async () => {
+		H.openStory();
+		await new Promise((r) => setTimeout(r, 1200));
+		const c = document.getElementById("storyCanvas");
+		const px = c.getContext("2d").getImageData(540, 960, 1, 1).data;
+		document.getElementById("storyDialog").close();
+		return [c.width === 1080 && c.height === 1920, px[3] === 255];
+	});
+	check("the saying of the day draws a 1080×1920 story picture", story.every(Boolean), story);
+	const badge = await page.evaluate(async () => { H.bump("fal"); await new Promise((r) => setTimeout(r, 400)); return !!(H.setting("badges", {}) || {}).fal1; });
+	check("a Hafez fal earns the first badge", badge);
+	await page.evaluate(() => { document.querySelectorAll(".badge-pop").forEach((c) => c.remove()); Fx.clear(); });
+	const games = await page.evaluate(async () => {
+		const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+		await Store.setSetting("gamesFree", false);
+		await chrome.storage.local.set({ rubi_break: { at: 1, until: 0 } });
+		await wait(100);
+		const lockedFirst = !BreakGames.open();
+		H.openGame("2048");
+		const lockShown = !!document.querySelector("#gameDialog .g-locked");
+		// A focus session ends: the break opens the games and offers them.
+		await chrome.storage.local.set({ rubi_break: { at: Date.now(), until: Date.now() + 5 * 60000 } });
+		await wait(200);
+		const invited = !!document.querySelector(".care-card.game-pop");
+		document.querySelectorAll(".care-card.game-pop").forEach((c) => c.remove());
+		H.openGame("2048");
+		localStorage.removeItem("rubi_2048");
+		BreakGames.G.restart();
+		for (let i = 0; i < 40 && !BreakGames.G.over; i++) { BreakGames.G.move(i % 4); await wait(5); }
+		const played = BreakGames.G.score > 0 && (H.funStats().gamesPlayed || 0) >= 1;
+		H.openGame("snake");
+		BreakGames.S.turn(2);
+		await wait(400);
+		const moving = BreakGames.S.state === "run";
+		document.getElementById("gameDialog").close();
+		return [lockedFirst, lockShown, BreakGames.open(), invited, played, moving];
+	});
+	check("break games stay locked until a focus session ends, then open and invite, and 2048 and Snake play", games.every(Boolean), games);
+	const pet = await page.evaluate(async () => {
+		const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+		const offFirst = !document.getElementById("petHome") && !(H.setting("pet", {}) || {}).on;
+		localStorage.removeItem("rubi_pet_asked"); await Store.setSetting("petAsked", false);
+		document.querySelectorAll("dialog[open]").forEach((d) => d.close());
+		const asked = Pet.invite() && !!document.querySelector(".care-card.pet-ask");
+		document.querySelector(".pet-ask .btn:not(.btn-ghost)").click();
+		await wait(100);
+		document.querySelectorAll(".pet-kind")[2].click();
+		document.querySelector("#petDialog .dialog-actions .btn:not(.btn-ghost)").click();
+		await wait(300);
+		const home = document.querySelector("#petHome .pet-svg.parrot");
+		const before = Pet.stats().xp;
+		await Store.add("todo", { text: "pet test", done: true, doneAt: Date.now() });
+		await wait(300);
+		const grew = Pet.stats().xp === before + 10;
+		const bubble = !document.querySelector("#petHome .pet-bubble").hidden;
+		const tricked = Object.keys(PetFx.TRICKS).length === 8 && !!Pet.show("flip") === false && document.querySelector("#petHome .pet-body").classList.contains("tr-flip");
+		Pet.feed();
+		await wait(100);
+		const fed = Date.now() - H.setting("pet", {}).fed < 5000;
+		await Store.setSetting("pet", { ...H.setting("pet", {}), on: false });
+		await wait(100);
+		return [offFirst, asked, !!home, grew, bubble, tricked, fed, !document.getElementById("petHome"), !Pet.invite()];
+	});
+	check("the pet is off until asked, can be adopted, grows with a finished task, reacts, does its own tricks, eats and can be turned off", pet.every(Boolean), pet);
+	const sky = await page.evaluate(() => {
+		const m = Sky.moonSvg(0.25);
+		const ev = Sky.events(new Date(2026, 10, 27, 12));
+		const r1 = Sky.reading(6, new Date(2026, 10, 27)), r2 = Sky.reading(6, new Date(2026, 10, 27));
+		return [/<path d="M50 10 A40 40 0 0 1 50 90/.test(m), ev[0].name.length > 0 && ev[0].at.getMonth() === 11, r1.gen === r2.gen && r1.lucky === r2.lucky, Sky.animalOf(1405) === 6 && Sky.animalOf(1403) === 4, Sky.signOf(new Date(1990, 9, 5, 12)) === 6, !!document.getElementById("fun-sky") && !!document.getElementById("fun-astro")];
+	});
+	check("the sky card draws the moon, lists coming events, and the horoscope gives one reading a day with the Persian animal year", sky.every(Boolean), sky);
+	const voice = await page.evaluate(async () => {
+		const sr = 22050, x = new Float32Array(sr);
+		for (let i = 0; i < x.length; i++) x[i] = Math.sin((2 * Math.PI * 180 * i) / sr) * 0.5;
+		VoiceFx.ready(x, sr);
+		const res = [];
+		for (const id of ["robot", "girl", "monster", "cave", "reverse"]) { await VoiceFx.apply(id); const o = VoiceFx.out; res.push(o.length >= x.length && o.every((v) => Number.isFinite(v)) && o.some((v) => Math.abs(v) > 0.5)); }
+		const w = VoiceFx.wav(VoiceFx.out, sr);
+		res.push(w.size === 44 + VoiceFx.out.length * 2, (H.funStats().voice || 0) >= 1);
+		return res;
+	});
+	check("the voice changer turns a recording into robot, girl, monster, cave and reverse voices and saves a WAV", voice.every(Boolean), voice);
+	const cam = await page.evaluate(async () => {
+		const off = !CamBg.get().on && !document.getElementById("camBg")?.srcObject;
+		await CamBg.setOn(true);
+		await new Promise((r) => setTimeout(r, 600));
+		const on = !!CamBg.stream && !document.getElementById("camBg").hidden && document.documentElement.classList.contains("cam-on");
+		await CamBg.setOn(false);
+		return [off, on, !CamBg.stream, document.getElementById("camBg").hidden];
+	});
+	check("the camera background is off until turned on, shows the camera and turns it off again", cam.every(Boolean), cam);
+	const cap = await page.evaluate(async () => {
+		document.querySelectorAll("dialog[open]").forEach((d) => d.close());
+		Capsule.write();
+		const d = document.getElementById("capsuleDialog");
+		d.querySelector("textarea").value = "Dear future me";
+		const tomorrow = H.dayKey(new Date(Date.now() + 2 * 864e5));
+		d.querySelector("input[type=date]").value = tomorrow;
+		d.querySelector(".dialog-actions .btn").click();
+		await new Promise((r) => setTimeout(r, 400));
+		const sealed = Store.list("capsule").find((c) => c.text === "Dear future me");
+		const card = document.getElementById("fun-capsule");
+		const locked = !!sealed && sealed.openAt === tomorrow && !Capsule.due(sealed) && card.querySelector("li.sealed") && !card.querySelector("li.sealed .btn");
+		await new Promise((r) => setTimeout(r, 2500));
+		await Store.update(sealed.id, { openAt: H.dayKey() });
+		localStorage.removeItem("rubi_cap_seen");
+		Capsule.arrived();
+		const pop = document.querySelector(".care-card.cap-pop");
+		pop?.querySelector(".btn").click();
+		await new Promise((r) => setTimeout(r, 300));
+		const read = d.open && d.querySelector(".cap-body")?.textContent === "Dear future me" && Store.list("capsule").some((x) => x.id === sealed.id && x.opened);
+		d.close();
+		return [!!locked, !!pop, read, (H.funStats().capsules || 0) >= 1];
+	});
+	check("a time-capsule letter stays sealed until its day, then arrives and opens (kept with the synced data)", cap.every(Boolean), cap);
+	const fr = await page.evaluate(async () => {
+		const c = document.createElement("canvas"); c.width = c.height = 300; const x = c.getContext("2d");
+		x.fillStyle = "#eee4d6"; x.fillRect(0, 0, 300, 300); x.fillStyle = "#2b1a10";
+		[[90, 90, 30], [210, 140, 20], [150, 230, 35]].forEach(([a, b, r]) => { x.beginPath(); x.arc(a, b, r, 0, 7); x.fill(); });
+		const img = new Image(); img.src = c.toDataURL(); await img.decode();
+		const r = Fortune.readCup(img);
+		const blank = document.createElement("canvas"); blank.width = blank.height = 100; const bx = blank.getContext("2d"); bx.fillStyle = "#fff"; bx.fillRect(0, 0, 100, 100);
+		const bimg = new Image(); bimg.src = blank.toDataURL(); await bimg.decode();
+		const rb = Fortune.readCup(bimg);
+		Fortune.spread();
+		await new Promise((res) => setTimeout(res, 300));
+		const sp = document.querySelectorAll("#tarotDialog .tarot").length;
+		document.querySelectorAll("dialog[open]").forEach((d) => d.close());
+		const daily = Fortune.dailyIndex();
+		return [r.marks.length === 3, r.marks.every((m) => m.sym >= 0 && m.sym < FortuneData.coffee.length), rb.marks.length === 3, sp === 3, daily === Fortune.dailyIndex() && daily >= 0 && daily < 22, ["fa", "en", "fr", "de"].every((l) => FortuneData.text[l].tarot.length === 22 && FortuneData.text[l].coffee.length === FortuneData.coffee.length && FortuneData.text[l].ball.length === 20)];
+	});
+	check("fortunes: the coffee cup photo gives three readings, a three-card tarot spread and a steady card of the day", fr.every(Boolean), fr);
+	const br = await page.evaluate(async () => {
+		Store.setSetting("breathe", { pattern: "box", min: 1, sound: false });
+		Breathe.start();
+		await new Promise((r) => setTimeout(r, 1500));
+		const ov = document.getElementById("breathe");
+		const ok = Breathe.running && ov && ov.dataset.phase === "0" && ov.querySelector(".br-circle").classList.contains("big");
+		document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+		await new Promise((r) => setTimeout(r, 500));
+		return [!!ok, !Breathe.running, !document.getElementById("breathe")];
+	});
+	check("the breathing exercise grows the circle on the in-breath and stops with Esc", br.every(Boolean), br);
+	const wxs = await page.evaluate(async () => {
+		const saved = H.wx;
+		const kinds = [[63, 1], [73, 1], [95, 0], [45, 1], [3, 1], [0, 0], [0, 1], [53, 1]].map(([c, d]) => WxScene.kindOf(c, d));
+		H.wx = { ...(saved || {}), city: "Test", code: 73, isDay: 1, wind: 10 };
+		window.dispatchEvent(new Event("hamyar-wx"));
+		await new Promise((r) => setTimeout(r, 400));
+		const cv = document.getElementById("wxScene");
+		const snowing = WxScene.kind === "snow" && !cv.hidden && cv.width > 0;
+		Store.setSetting("wxScene", { on: false });
+		await new Promise((r) => setTimeout(r, 200));
+		const off = cv.hidden && !WxScene.kind;
+		Store.setSetting("wxScene", { on: true });
+		H.wx = saved; window.dispatchEvent(new Event("hamyar-wx"));
+		return [kinds.join() === "rain,snow,storm,fog,clouds,night,sun,drizzle", snowing, off];
+	});
+	check("the live weather scene follows the weather (rain, snow, storm, fog, clouds, night sky) and turns off", wxs.every(Boolean), wxs);
+	const cmp = await page.evaluate(async () => {
+		Store.setSetting("composer", { dg: "shur", inst: "santour" });
+		Composer.open();
+		const keys = document.querySelectorAll("#composerDialog .cmp-key").length;
+		const shur = [7, 8, 9].map((n) => Composer.cents("shur", n));
+		const mahurOct = Composer.cents("mahur", 14) - Composer.cents("mahur", 7);
+		document.querySelector("#composerDialog .cmp-rec").click();
+		for (const code of ["KeyA", "KeyS", "KeyD"]) { document.dispatchEvent(new KeyboardEvent("keydown", { code, key: "x" })); await new Promise((r) => setTimeout(r, 60)); document.dispatchEvent(new KeyboardEvent("keyup", { code, key: "x" })); }
+		document.querySelector("#composerDialog .cmp-rec").click();
+		const notes = (Composer.last?.notes || []).map((x) => x[1]).join();
+		const b = await Composer.toWav({ ...Composer.last, dg: "segah", inst: "ney" });
+		const before = (Store.get().settings.tunes || []).length;
+		Composer.keep();
+		const after = (Store.get().settings.tunes || []).length;
+		document.getElementById("composerDialog").close();
+		return [keys === 22, shur.join() === "-500,-350,-200", mahurOct === 1200, notes === "7,8,9", b.size > 44 * 1000, after === before + 1];
+	});
+	check("the composer plays a dastgah from the keyboard (quarter tones included), records, keeps and saves a WAV", cmp.every(Boolean), cmp);
+	await page.evaluate(() => { Fx.clear(); document.querySelectorAll(".care-card").forEach((c) => c.remove()); H.showView("home"); });
 
 	check("no page errors", errors.length === 0, errors);
 	await ctx.close();
