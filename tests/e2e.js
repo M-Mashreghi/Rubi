@@ -323,7 +323,7 @@ function i18nParity() {
 	console.log("Fun page");
 	await page.evaluate(() => { document.querySelectorAll("dialog[open]").forEach((d) => d.close()); document.getElementById("celebrate")?.remove(); });
 	await page.click('.rail-btn[data-go="fun"]');
-	check("fun page opens with its cards", await page.evaluate(() => !document.getElementById("viewFun").hidden && ["history", "saying", "cele", "badges", "games", "pet", "sky", "astro", "voice", "cam", "capsule", "fortune", "breathe"].every((id) => document.getElementById("fun-" + id))));
+	check("fun page opens with its cards", await page.evaluate(() => !document.getElementById("viewFun").hidden && ["history", "saying", "cele", "badges", "games", "pet", "sky", "astro", "voice", "cam", "capsule", "fortune", "breathe", "wxscene", "composer"].every((id) => document.getElementById("fun-" + id))));
 	const hist = await page.evaluate(async () => {
 		H.openHistory(new Date(2026, 10, 27, 12));
 		await new Promise((r) => setTimeout(r, 200));
@@ -493,6 +493,40 @@ function i18nParity() {
 		return [!!ok, !Breathe.running, !document.getElementById("breathe")];
 	});
 	check("the breathing exercise grows the circle on the in-breath and stops with Esc", br.every(Boolean), br);
+	const wxs = await page.evaluate(async () => {
+		const saved = H.wx;
+		const kinds = [[63, 1], [73, 1], [95, 0], [45, 1], [3, 1], [0, 0], [0, 1], [53, 1]].map(([c, d]) => WxScene.kindOf(c, d));
+		H.wx = { ...(saved || {}), city: "Test", code: 73, isDay: 1, wind: 10 };
+		window.dispatchEvent(new Event("hamyar-wx"));
+		await new Promise((r) => setTimeout(r, 400));
+		const cv = document.getElementById("wxScene");
+		const snowing = WxScene.kind === "snow" && !cv.hidden && cv.width > 0;
+		Store.setSetting("wxScene", { on: false });
+		await new Promise((r) => setTimeout(r, 200));
+		const off = cv.hidden && !WxScene.kind;
+		Store.setSetting("wxScene", { on: true });
+		H.wx = saved; window.dispatchEvent(new Event("hamyar-wx"));
+		return [kinds.join() === "rain,snow,storm,fog,clouds,night,sun,drizzle", snowing, off];
+	});
+	check("the live weather scene follows the weather (rain, snow, storm, fog, clouds, night sky) and turns off", wxs.every(Boolean), wxs);
+	const cmp = await page.evaluate(async () => {
+		Store.setSetting("composer", { dg: "shur", inst: "santour" });
+		Composer.open();
+		const keys = document.querySelectorAll("#composerDialog .cmp-key").length;
+		const shur = [7, 8, 9].map((n) => Composer.cents("shur", n));
+		const mahurOct = Composer.cents("mahur", 14) - Composer.cents("mahur", 7);
+		document.querySelector("#composerDialog .cmp-rec").click();
+		for (const code of ["KeyA", "KeyS", "KeyD"]) { document.dispatchEvent(new KeyboardEvent("keydown", { code, key: "x" })); await new Promise((r) => setTimeout(r, 60)); document.dispatchEvent(new KeyboardEvent("keyup", { code, key: "x" })); }
+		document.querySelector("#composerDialog .cmp-rec").click();
+		const notes = (Composer.last?.notes || []).map((x) => x[1]).join();
+		const b = await Composer.toWav({ ...Composer.last, dg: "segah", inst: "ney" });
+		const before = (Store.get().settings.tunes || []).length;
+		Composer.keep();
+		const after = (Store.get().settings.tunes || []).length;
+		document.getElementById("composerDialog").close();
+		return [keys === 22, shur.join() === "-500,-350,-200", mahurOct === 1200, notes === "7,8,9", b.size > 44 * 1000, after === before + 1];
+	});
+	check("the composer plays a dastgah from the keyboard (quarter tones included), records, keeps and saves a WAV", cmp.every(Boolean), cmp);
 	await page.evaluate(() => { Fx.clear(); document.querySelectorAll(".care-card").forEach((c) => c.remove()); H.showView("home"); });
 
 	check("no page errors", errors.length === 0, errors);
