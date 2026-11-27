@@ -114,7 +114,7 @@
 		const card = el("div", { class: "care-card badge-pop t" + b[4], role: "status" },
 			el("span", { class: "badge-medal small t" + b[4] }, b[1]),
 			el("div", { class: "grow" }, el("strong", {}, t("bdNew")), el("div", {}, name(b[0])), el("small", { class: "muted" }, desc(b)),
-				el("div", { class: "row wrap", style: "gap:6px;margin-top:8px" },
+				el("div", { class: "fun-row", style: "gap:6px;margin-top:8px" },
 					el("button", { type: "button", class: "btn small", onclick: () => { shareBadge(b); } }, "📤 " + t("bdShare")),
 					el("button", { type: "button", class: "btn btn-ghost small", onclick: () => { card.remove(); open(); } }, t("bdSee")))),
 			el("button", { class: "care-x", type: "button", "aria-label": t("close"), onclick: () => card.remove() }, "✕"));

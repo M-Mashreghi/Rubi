@@ -322,7 +322,7 @@ function i18nParity() {
 	console.log("Fun page");
 	await page.evaluate(() => { document.querySelectorAll("dialog[open]").forEach((d) => d.close()); document.getElementById("celebrate")?.remove(); });
 	await page.click('.rail-btn[data-go="fun"]');
-	check("fun page opens with its cards", await page.evaluate(() => !document.getElementById("viewFun").hidden && ["history", "saying", "cele", "badges"].every((id) => document.getElementById("fun-" + id))));
+	check("fun page opens with its cards", await page.evaluate(() => !document.getElementById("viewFun").hidden && ["history", "saying", "cele", "badges", "games", "pet"].every((id) => document.getElementById("fun-" + id))));
 	const hist = await page.evaluate(async () => {
 		H.openHistory(new Date(2026, 10, 27, 12));
 		await new Promise((r) => setTimeout(r, 200));
@@ -360,7 +360,59 @@ function i18nParity() {
 	check("the saying of the day draws a 1080×1920 story picture", story.every(Boolean), story);
 	const badge = await page.evaluate(async () => { H.bump("fal"); await new Promise((r) => setTimeout(r, 400)); return !!(H.setting("badges", {}) || {}).fal1; });
 	check("a Hafez fal earns the first badge", badge);
-	await page.evaluate(() => { document.querySelectorAll(".badge-pop").forEach((c) => c.remove()); Fx.clear(); H.showView("home"); });
+	await page.evaluate(() => { document.querySelectorAll(".badge-pop").forEach((c) => c.remove()); Fx.clear(); });
+	const games = await page.evaluate(async () => {
+		const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+		await Store.setSetting("gamesFree", false);
+		await chrome.storage.local.set({ rubi_break: { at: 1, until: 0 } });
+		await wait(100);
+		const lockedFirst = !BreakGames.open();
+		H.openGame("2048");
+		const lockShown = !!document.querySelector("#gameDialog .g-locked");
+		// A focus session ends: the break opens the games and offers them.
+		await chrome.storage.local.set({ rubi_break: { at: Date.now(), until: Date.now() + 5 * 60000 } });
+		await wait(200);
+		const invited = !!document.querySelector(".care-card.game-pop");
+		document.querySelectorAll(".care-card.game-pop").forEach((c) => c.remove());
+		H.openGame("2048");
+		localStorage.removeItem("rubi_2048");
+		BreakGames.G.restart();
+		for (let i = 0; i < 40 && !BreakGames.G.over; i++) { BreakGames.G.move(i % 4); await wait(5); }
+		const played = BreakGames.G.score > 0 && (H.funStats().gamesPlayed || 0) >= 1;
+		H.openGame("snake");
+		BreakGames.S.turn(2);
+		await wait(400);
+		const moving = BreakGames.S.state === "run";
+		document.getElementById("gameDialog").close();
+		return [lockedFirst, lockShown, BreakGames.open(), invited, played, moving];
+	});
+	check("break games stay locked until a focus session ends, then open and invite, and 2048 and Snake play", games.every(Boolean), games);
+	const pet = await page.evaluate(async () => {
+		const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+		const offFirst = !document.getElementById("petHome") && !(H.setting("pet", {}) || {}).on;
+		localStorage.removeItem("rubi_pet_asked"); await Store.setSetting("petAsked", false);
+		document.querySelectorAll("dialog[open]").forEach((d) => d.close());
+		const asked = Pet.invite() && !!document.querySelector(".care-card.pet-ask");
+		document.querySelector(".pet-ask .btn:not(.btn-ghost)").click();
+		await wait(100);
+		document.querySelectorAll(".pet-kind")[2].click();
+		document.querySelector("#petDialog .dialog-actions .btn:not(.btn-ghost)").click();
+		await wait(300);
+		const home = document.querySelector("#petHome .pet-svg.parrot");
+		const before = Pet.stats().xp;
+		await Store.add("todo", { text: "pet test", done: true, doneAt: Date.now() });
+		await wait(300);
+		const grew = Pet.stats().xp === before + 10;
+		const bubble = !document.querySelector("#petHome .pet-bubble").hidden;
+		Pet.feed();
+		await wait(100);
+		const fed = Date.now() - H.setting("pet", {}).fed < 5000;
+		await Store.setSetting("pet", { ...H.setting("pet", {}), on: false });
+		await wait(100);
+		return [offFirst, asked, !!home, grew, bubble, fed, !document.getElementById("petHome"), !Pet.invite()];
+	});
+	check("the pet is off until asked, can be adopted, grows with a finished task, reacts, eats and can be turned off", pet.every(Boolean), pet);
+	await page.evaluate(() => { Fx.clear(); document.querySelectorAll(".care-card").forEach((c) => c.remove()); H.showView("home"); });
 
 	check("no page errors", errors.length === 0, errors);
 	await ctx.close();
