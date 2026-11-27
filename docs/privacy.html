@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rubi Privacy Policy</title>
+<meta name="description" content="How the Rubi Chrome extension handles your data, including data from Google APIs.">
+<link rel="icon" href="logo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<header><img src="logo.png" alt=""><h1>Rubi Privacy Policy</h1></header>
+<p class="muted">Rubi | Your All-in-One Smart Assistant (Chrome extension, ID <code>ohpaebogaegajgcgeemadkdinfohpemp</code>) · Effective 27 November 2026</p>
+<nav class="lang"><a href="#fa">فارسی</a> · <a href="./">Rubi home page</a></nav>
+
+<div class="card">
+<p><strong>In short:</strong> Rubi has no servers of its own. Everything you create in Rubi stays in your browser, or in your own Google account if you choose to connect it. Rubi has no ads, no analytics and no tracking. It never sells or shares your data, and it never uses your data for advertising.</p>
+</div>
+
+<h2>1. Who we are</h2>
+<p>Rubi is a free, open-source new-tab extension for Google Chrome made by Mohammad Mashreghi. The source code is public at <a href="https://github.com/M-Mashreghi/Rubi">github.com/M-Mashreghi/Rubi</a>. Contact: <a href="mailto:amiramirmashgh@gmail.com">amiramirmashgh@gmail.com</a>.</p>
+
+<h2>2. Data you create in Rubi</h2>
+<p>Your tasks, notes, shortcuts and folders, calendar events and birthdays, reminders, settings, wallpaper and other content are stored in your browser (Chrome extension storage, local storage and IndexedDB). If Chrome sync is on for extensions, Chrome may copy your Rubi settings and content to your Google account through Chrome's own sync service. The developer never receives this data.</p>
+
+<h2>3. Data from Google (Google sign-in is optional)</h2>
+<p>Rubi works fully without signing in. Two optional features use Google APIs, and only after you turn them on in Settings and approve Google's consent screen:</p>
+<table>
+<tr><th>Feature</th><th>Permission (scope)</th><th>What Rubi does with it</th></tr>
+<tr><td>Save to Google Drive</td><td><code>https://www.googleapis.com/auth/drive.appdata</code></td><td>Saves one backup file of your Rubi content in the hidden Rubi app folder of your own Google Drive and reads it back, so your content appears on your other computers. Rubi cannot see or open any of your other Drive files.</td></tr>
+<tr><td>Show Google Calendar events</td><td><code>https://www.googleapis.com/auth/calendar.readonly</code></td><td>Reads the list of your calendars and the events in the dates you are looking at, and shows them in Rubi's calendar. Rubi never creates, changes or deletes anything in your Google Calendar. Events are kept only in memory while the page is open and are not saved or copied anywhere.</td></tr>
+<tr><td>Both</td><td>Your Google account email (Chrome identity)</td><td>Shown in Settings so you know which account is connected.</td></tr>
+</table>
+<p>Data from Google APIs goes directly between your browser and Google. It is never sent to the developer or to any other party.</p>
+<p><strong>Limited Use.</strong> Rubi's use and transfer to any other app of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements. In particular, Rubi:</p>
+<ul>
+<li>uses Google user data only to provide the features described above, which you can see in Rubi;</li>
+<li>does not transfer Google user data to anyone, except as needed to provide these features, to comply with law, or as part of a merger or acquisition with your consent;</li>
+<li>does not use or transfer Google user data for advertising, retargeting or personalised ads;</li>
+<li>does not sell Google user data, or use it to determine credit-worthiness or for lending;</li>
+<li>does not allow any person to read Google user data, unless you ask for help and give consent, it is needed for security or to comply with law.</li>
+</ul>
+<p><strong>Stopping access.</strong> Turn the feature off in Rubi's Settings, or remove Rubi's access at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>. To delete the Drive backup, disconnect Rubi from Drive in Google Drive's settings (Manage apps → Rubi → Delete hidden app data).</p>
+
+<h2>4. Optional online features that use other services</h2>
+<p>Some boxes and tools fetch information from public services. They contact those services only when you use that feature, and they send only what the feature needs:</p>
+<table>
+<tr><th>Feature</th><th>Service</th><th>What is sent</th></tr>
+<tr><td>Weather, air quality, prayer times</td><td>Open-Meteo</td><td>The city you type, or its coordinates</td></tr>
+<tr><td>Currency, gold and crypto rates, price alerts</td><td>Frankfurter, open.er-api.com, CoinGecko, Yahoo Finance; Navasan (only with your own key)</td><td>The currencies or symbols shown</td></tr>
+<tr><td>Football</td><td>TheSportsDB</td><td>The team names you add</td></tr>
+<tr><td>Translator</td><td>Google Translate</td><td>The text you ask to translate</td></tr>
+<tr><td>"What's this song?"</td><td>AudD (only with your own key)</td><td>A few seconds of audio, only when you press the button</td></tr>
+<tr><td>Site icons</td><td>Google's favicon service</td><td>The web address of your shortcuts, to fetch their icons</td></tr>
+<tr><td>Voice search</td><td>Chrome's speech recognition</td><td>Your voice while you are searching by voice</td></tr>
+<tr><td>Search and image search</td><td>Google (or the search engine you pick)</td><td>Your search, when you press search</td></tr>
+<tr><td>Update notice (hand-installed copies only)</td><td>GitHub</td><td>A request for the latest version number</td></tr>
+</table>
+<p>Like any website, these services see your IP address. Each has its own privacy policy.</p>
+
+<h2>5. Browser permissions</h2>
+<ul>
+<li><strong>Bookmarks and most-visited sites</strong> (asked only when you choose "Import from browser"): read once to let you pick shortcuts. Nothing leaves your computer.</li>
+<li><strong>Site flag</strong> (off by default, needs your approval): reads the server address of the page you open and looks up its country in a database bundled inside Rubi. The address never leaves your computer and no browsing history is kept.</li>
+<li><strong>Screenshots, snippets, focus mode and the floating timer</strong>: act on a page only when you use them.</li>
+<li><strong>Notifications, alarms and idle state</strong>: for the reminders, timers and breaks you set.</li>
+</ul>
+
+<h2>6. Keeping and deleting data</h2>
+<p>Your data stays until you delete it. You can delete items one by one, or remove the extension, which deletes everything Rubi stored in the browser. Data in your Google account (Drive backup, Chrome sync) can be removed as described above.</p>
+
+<h2>7. Children</h2>
+<p>Rubi is a general productivity tool and is not directed at children under 13.</p>
+
+<h2>8. Changes</h2>
+<p>If this policy changes, the new version will be posted on this page with a new date. Earlier versions are kept in the project's public history on GitHub.</p>
+
+<h2>9. Contact</h2>
+<p>Questions or requests: <a href="mailto:amiramirmashgh@gmail.com">amiramirmashgh@gmail.com</a></p>
+
+<hr>
+<section id="fa" class="fa" lang="fa">
+<h2>خلاصه به فارسی</h2>
+<p>روبی سرور ندارد. هرچه در روبی می‌سازید در مرورگر خودتان می‌ماند، یا اگر خودتان بخواهید، در حساب گوگل خودتان. روبی تبلیغ، آمار و ردیابی ندارد و اطلاعات شما را نمی‌فروشد و به کسی نمی‌دهد.</p>
+<ul>
+<li><strong>گوگل درایو (اختیاری):</strong> فقط یک فایل پشتیبان در پوشه‌ی مخفی روبی در درایو خودتان ذخیره می‌شود. روبی فایل‌های دیگر درایو شما را نمی‌بیند.</li>
+<li><strong>تقویم گوگل (اختیاری، فقط خواندنی):</strong> رویدادها فقط نمایش داده می‌شوند. روبی هیچ‌وقت چیزی در تقویم شما تغییر نمی‌دهد و رویدادها را جایی ذخیره نمی‌کند.</li>
+<li>استفاده‌ی روبی از اطلاعات دریافتی از APIهای گوگل تابع «سیاست داده‌های کاربر سرویس‌های API گوگل» و الزامات Limited Use است.</li>
+<li>ابزارهایی مثل آب‌وهوا، نرخ ارز، ترجمه و فوتبال فقط وقتی از آن‌ها استفاده کنید و فقط با اطلاعات لازم به سرویس مربوط وصل می‌شوند.</li>
+<li>برای پرسش یا حذف اطلاعات: <a href="mailto:amiramirmashgh@gmail.com">amiramirmashgh@gmail.com</a></li>
+</ul>
+</section>
+<footer class="muted">© 2026 Mohammad Mashreghi · <a href="./">Rubi</a> · <a href="https://github.com/M-Mashreghi/Rubi">Source code</a></footer>
+</main>
+</body>
+</html>
