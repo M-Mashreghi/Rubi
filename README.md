@@ -6,7 +6,7 @@
 
 <p align="center">
   <img alt="Chrome MV3" src="https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white" />
-  <img alt="Version" src="https://img.shields.io/badge/version-4.4.1-6c4ff0" />
+  <img alt="Version" src="https://img.shields.io/badge/version-4.5.0-6c4ff0" />
   <img alt="Languages" src="https://img.shields.io/badge/languages-FA%20%7C%20EN%20%7C%20FR%20%7C%20DE-14b8a6" />
   <img alt="No ads" src="https://img.shields.io/badge/ads-none-3db985" />
   <img alt="No tracking" src="https://img.shields.io/badge/tracking-none-3db985" />
@@ -129,11 +129,16 @@
 - **🪶 ضرب‌المثل و شعر روز:** هر روز یک ضرب‌المثل یا بیتی از فردوسی، سعدی، مولوی، حافظ، خیام، نیما، سهراب، فروغ و … با **معنی** آن. با «📸 تصویر استوری» یک تصویر ۱۰۸۰×۱۹۲۰ با شش طرح رنگی و چهار قلم فارسی بسازید و ذخیره، کپی یا مستقیم هم‌رسانی کنید.
 - **🎮 بازی‌های استراحت:** ۲۰۴۸ و مار. وقتی یک دور تمرکز تمام شود، به اندازه‌ی زمان استراحت باز می‌شوند و یک کارت «وقت استراحت!» دعوتتان می‌کند؛ وقت استراحت که تمام شد پیشنهاد برگشت به تمرکز می‌دهند (اگر بخواهید اول دستتان را تمام می‌کنید). با کلیدهای جهت یا کشیدن انگشت بازی می‌شوند، رکوردها نگه داشته می‌شود و اگر بخواهید می‌توانید آنها را همیشه باز بگذارید.
 - **🐾 حیوان خانگی:** پیش‌فرض خاموش است و روبی فقط یک بار می‌پرسد که می‌خواهید یا نه. گربه، سگ، طوطی، خرگوش، روباه، پاندا، پنگوئن یا همستر؛ اسم و گوشه‌ی صفحه‌اش را انتخاب کنید. با هر کار انجام‌شده، عادت، دور تمرکز و یادداشت سپاس‌گزاری بزرگ‌تر می‌شود (در سطح ۳ شال‌گردن، ۵ کلاه، ۷ عینک و ۱۰ تاج می‌گیرد)، پلک می‌زند، با چشم‌هایش موس شما را دنبال می‌کند، در صفحه راه می‌رود، شب‌ها می‌خوابد، با نوازش قلب می‌فرستد، غذا می‌خواهد و برای کارهایتان ذوق می‌کند. هر حیوان صدای خودش را دارد (میو و خرخر گربه، واق‌واق سگ، سوت طوطی، جیغ روباه، بوق پنگوئن، جیرجیر همستر و …) که داخل مرورگر ساخته می‌شود و فقط وقتی با او بازی می‌کنید پخش می‌شود، و حرکت‌های مخصوص خودش: گربه می‌پرد و کش‌وقوس می‌آید، سگ دور خودش می‌دود و پشتک می‌زند، طوطی می‌رقصد و سر تکان می‌دهد، خرگوش جست‌وخیز می‌کند، روباه دنبال دمش می‌چرخد، پاندا قل می‌خورد، پنگوئن تاتی‌تاتی می‌کند و روی شکم سُر می‌خورد. برای دیدن نمایش روی حیوان دوبار کلیک کنید یا 🎪 را بزنید. هر وقت بخواهید خاموشش کنید؛ پیشرفتش می‌ماند.
+- **🔭 آسمان شب:** شکل امشب ماه (با تصویر دقیق هلال)، درصد روشنایی و سن ماه، تاریخ ماه کامل و ماه نو بعدی، طلوع و غروب شهر شما، و فهرست رویدادهای پیش رو در آسمان: بارش‌های شهابی (برساوشی، جوزایی، …) با تعداد شهاب در ساعت و خورشیدگرفتگی‌ها و ماه‌گرفتگی‌های ۲۰۲۶ تا ۲۰۲۸، با تاریخ شمسی و میلادی.
+- **✨ طالع و برج من:** برج شما از روی تاریخ تولد (حمل، ثور، …) با عنصر، سیاره‌ی حاکم و ویژگی‌ها؛ طالع روزانه (امروز، دوستی و عشق، کار)، عدد و رنگ شانس و حال‌وهوای روز که برای هر برج تمام روز ثابت است؛ و سال حیوانی تولد شما و امسال در گاه‌شماری ایرانی (موش، گاو، پلنگ، … ۱۴۰۵ سال اسب). فقط برای سرگرمی!
+- **🎭 تغییر صدا:** تا ۳۰ ثانیه صدایتان را ضبط کنید یا یک فایل صوتی باز کنید و آن را با ۱۵ افکت بشنوید: ربات، دختر، زن، مرد، بچه، هیولا، خرس، گربه، پرنده، آدم فضایی، پژواک کوه، غار، رادیو، تلفن و برعکس. نتیجه را به‌صورت WAV ذخیره یا هم‌رسانی کنید. صدا فقط داخل همان صفحه پردازش می‌شود.
+- **📷 پس‌زمینه‌ی زنده با دوربین:** پیش‌فرض خاموش؛ با روشن کردنش (در صفحه‌ی سرگرمی یا تنظیمات › پس‌زمینه) کروم اجازه‌ی دوربین می‌خواهد و تصویر زنده‌ی شما پشت روبی پخش می‌شود، آینه‌ای یا نه، با حالت‌های طبیعی، کمی محو، سیاه‌وسفید، قدیمی، نئون و رؤیایی. تصویر ضبط یا فرستاده نمی‌شود و با بیرون رفتن از تب دوربین خاموش می‌شود.
 - **🏅 نشان‌ها و دستاوردها:** ۴۰ نشان برنزی، نقره‌ای و طلایی برای کارهایی که در روبی می‌کنید؛ مثل «۷ روز تمرکز پشت‌سرهم»، «۳۰ فال حافظ»، «۱۰۰ کار انجام‌شده»، «سحرخیز» یا «جشن یلدا با روبی». هر نشان تازه با کنفتی خبر داده می‌شود و می‌شود آن را به‌صورت تصویر استوری به اشتراک گذاشت.
 
 <p align="center"><img src="docs/screenshots/fun-fa.png" alt="صفحه‌ی سرگرمی" width="900" /></p>
 <p align="center"><img src="docs/screenshots/history-fa.png" alt="امروز در تاریخ" width="900" /></p>
 <p align="center"><img src="docs/screenshots/games-2048-fa.png" alt="بازی ۲۰۴۸ در زمان استراحت" width="440" /> <img src="docs/screenshots/pet-adopt-fa.png" alt="انتخاب حیوان خانگی" width="440" /></p>
+<p align="center"><img src="docs/screenshots/sky-fa.png" alt="آسمان شب و طالع" width="900" /></p>
 <p align="center"><img src="docs/screenshots/celebrate-nowruz-fa.png" alt="جشن نوروز و لحظه‌ی تحویل سال" width="900" /></p>
 <p align="center"><img src="docs/screenshots/celebrate-birthday-fa.png" alt="جشن تولد" width="900" /></p>
 <p align="center"><img src="docs/screenshots/celebrate-yalda-fa.png" alt="شب یلدا" width="900" /></p>
@@ -374,12 +379,17 @@ The 🎈 button on the side bar opens a page full of playful things. Everything 
 - **🪶 Saying of the day:** a Persian proverb or a couplet by Ferdowsi, Saadi, Rumi, Hafez, Khayyam, Nima, Sepehri, Forough and others, with its **meaning**. "📸 Story picture" makes a 1080×1920 image in six colour styles and four Persian fonts to save, copy or share.
 - **🎮 Break games:** 2048 and Snake. They open when a focus session ends, for as long as the break, with a "Break time!" card; when the break is over they offer to take you back to focus (you can finish the round first). Play with the arrow keys or a swipe; best scores are kept, and you can choose to always allow them.
 - **🐾 Virtual pet:** off by default; Rubi asks once whether you want one. A cat, dog, parrot, rabbit, fox, panda, penguin or hamster with a name you choose lives in a corner of the page. It grows with every finished task, habit, focus session and gratitude note (a scarf at level 3, a hat at 5, glasses at 7, a crown at 10), blinks, follows your pointer with its eyes, walks about, sleeps at night, sends hearts when petted, asks for food and cheers when you get things done. Each animal has its own voice (meow and purr, bark, parrot whistle, fox yip, penguin honk, hamster squeak…), made in the browser and played only when you play with it, and its own tricks: the cat pounces and stretches, the dog does zoomies and backflips, the parrot dances and headbangs, the rabbit does binkies, the fox chases its tail, the panda rolls, the penguin waddles and belly-slides, the hamster rolls. Double-click it or press 🎪 for a trick. Turn it off any time; its progress stays.
+- **🔭 Night sky:** tonight's moon (drawn to its real phase), how much of it is lit and its age, the next full and new moon, sunrise and sunset in your city, and what's coming up in the sky: meteor showers (Perseids, Geminids…) with meteors an hour, and the solar and lunar eclipses of 2026 to 2028, with Persian and Gregorian dates.
+- **✨ My star sign:** your sign from your birthday with its element, ruling planet and traits; a daily horoscope (today, love and friends, work), lucky number, lucky colour and mood that stay the same all day for each sign; and the animal of your birth year and of this year in the Persian calendar (Rat, Ox, Leopard… 1405 is the year of the Horse). Just for fun!
+- **🎭 Voice changer:** record up to 30 seconds or open an audio file and hear it with 15 effects: robot, girl, woman, man, child, monster, bear, cat, bird, alien, mountain echo, cave, radio, phone and reverse. Save the result as a WAV or share it. The sound is processed in the page only.
+- **📷 Live camera background:** off by default. Turn it on (on the fun page or in Settings › Background), allow the camera, and your live picture plays behind Rubi, mirrored or not, with natural, soft blur, black and white, vintage, neon and dreamy looks. Nothing is recorded or sent, and the camera turns off when you leave the tab.
 - **🏅 Badges and achievements:** 40 bronze, silver and gold badges for what you do in Rubi, such as "7 days of focus in a row", "30 Hafez fals", "100 tasks done", "Early bird" or "Celebrate Yalda with Rubi". New badges arrive with confetti and can be shared as a story picture.
 
 <p align="center"><img src="docs/screenshots/fun-fa.png" alt="Fun page" width="900" /></p>
 <p align="center"><img src="docs/screenshots/history-fa.png" alt="Today in history" width="900" /></p>
 <p align="center"><img src="docs/screenshots/celebrate-nowruz-fa.png" alt="Nowruz and the new year moment" width="900" /></p>
 <p align="center"><img src="docs/screenshots/games-2048-fa.png" alt="2048 on a break" width="440" /> <img src="docs/screenshots/pet-adopt-fa.png" alt="Choosing a pet" width="440" /></p>
+<p align="center"><img src="docs/screenshots/sky-fa.png" alt="Night sky and star sign" width="900" /></p>
 
 ### Where your data lives
 

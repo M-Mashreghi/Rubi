@@ -31,7 +31,8 @@ function i18nParity() {
 
 	const ctx = await chromium.launchPersistentContext("", {
 		headless: true, channel: "chromium",
-		args: [`--disable-extensions-except=${EXT}`, `--load-extension=${EXT}`],
+		// A fake camera and microphone that are allowed without a prompt, for the voice changer and camera background.
+		args: [`--disable-extensions-except=${EXT}`, `--load-extension=${EXT}`, "--use-fake-device-for-media-stream", "--use-fake-ui-for-media-stream"],
 		viewport: { width: 1440, height: 900 }
 	});
 	const sw = ctx.serviceWorkers()[0] || (await ctx.waitForEvent("serviceworker", { timeout: 20000 }));
@@ -322,7 +323,7 @@ function i18nParity() {
 	console.log("Fun page");
 	await page.evaluate(() => { document.querySelectorAll("dialog[open]").forEach((d) => d.close()); document.getElementById("celebrate")?.remove(); });
 	await page.click('.rail-btn[data-go="fun"]');
-	check("fun page opens with its cards", await page.evaluate(() => !document.getElementById("viewFun").hidden && ["history", "saying", "cele", "badges", "games", "pet"].every((id) => document.getElementById("fun-" + id))));
+	check("fun page opens with its cards", await page.evaluate(() => !document.getElementById("viewFun").hidden && ["history", "saying", "cele", "badges", "games", "pet", "sky", "astro", "voice", "cam"].every((id) => document.getElementById("fun-" + id))));
 	const hist = await page.evaluate(async () => {
 		H.openHistory(new Date(2026, 10, 27, 12));
 		await new Promise((r) => setTimeout(r, 200));
@@ -413,6 +414,33 @@ function i18nParity() {
 		return [offFirst, asked, !!home, grew, bubble, tricked, fed, !document.getElementById("petHome"), !Pet.invite()];
 	});
 	check("the pet is off until asked, can be adopted, grows with a finished task, reacts, does its own tricks, eats and can be turned off", pet.every(Boolean), pet);
+	const sky = await page.evaluate(() => {
+		const m = Sky.moonSvg(0.25);
+		const ev = Sky.events(new Date(2026, 10, 27, 12));
+		const r1 = Sky.reading(6, new Date(2026, 10, 27)), r2 = Sky.reading(6, new Date(2026, 10, 27));
+		return [/<path d="M50 10 A40 40 0 0 1 50 90/.test(m), ev[0].name.length > 0 && ev[0].at.getMonth() === 11, r1.gen === r2.gen && r1.lucky === r2.lucky, Sky.animalOf(1405) === 6 && Sky.animalOf(1403) === 4, Sky.signOf(new Date(1990, 9, 5, 12)) === 6, !!document.getElementById("fun-sky") && !!document.getElementById("fun-astro")];
+	});
+	check("the sky card draws the moon, lists coming events, and the horoscope gives one reading a day with the Persian animal year", sky.every(Boolean), sky);
+	const voice = await page.evaluate(async () => {
+		const sr = 22050, x = new Float32Array(sr);
+		for (let i = 0; i < x.length; i++) x[i] = Math.sin((2 * Math.PI * 180 * i) / sr) * 0.5;
+		VoiceFx.ready(x, sr);
+		const res = [];
+		for (const id of ["robot", "girl", "monster", "cave", "reverse"]) { await VoiceFx.apply(id); const o = VoiceFx.out; res.push(o.length >= x.length && o.every((v) => Number.isFinite(v)) && o.some((v) => Math.abs(v) > 0.5)); }
+		const w = VoiceFx.wav(VoiceFx.out, sr);
+		res.push(w.size === 44 + VoiceFx.out.length * 2, (H.funStats().voice || 0) >= 1);
+		return res;
+	});
+	check("the voice changer turns a recording into robot, girl, monster, cave and reverse voices and saves a WAV", voice.every(Boolean), voice);
+	const cam = await page.evaluate(async () => {
+		const off = !CamBg.get().on && !document.getElementById("camBg")?.srcObject;
+		await CamBg.setOn(true);
+		await new Promise((r) => setTimeout(r, 600));
+		const on = !!CamBg.stream && !document.getElementById("camBg").hidden && document.documentElement.classList.contains("cam-on");
+		await CamBg.setOn(false);
+		return [off, on, !CamBg.stream, document.getElementById("camBg").hidden];
+	});
+	check("the camera background is off until turned on, shows the camera and turns it off again", cam.every(Boolean), cam);
 	await page.evaluate(() => { Fx.clear(); document.querySelectorAll(".care-card").forEach((c) => c.remove()); H.showView("home"); });
 
 	check("no page errors", errors.length === 0, errors);

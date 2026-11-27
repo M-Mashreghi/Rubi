@@ -400,3 +400,56 @@ html.cele-newyear { --accent: #d97706 !important; }
 @keyframes pet-step { 50% { transform: translateY(-4px) rotate(3deg); } }
 .pet-look { transition: transform 0.15s; }
 @media (prefers-reduced-motion: reduce) { [class*="tr-"], .pet-home.walking .pet-body, .pet-home.walking .pet-svg { animation: none !important; } }
+
+/* ---------- sky and horoscope ---------- */
+.fun-sky, .fun-astro { display: flex; flex-direction: column; gap: 10px; }
+.sky-now { display: flex; gap: 14px; align-items: center; }
+.sky-moon { flex: none; filter: drop-shadow(0 0 14px rgb(255 236 170 / 0.35)); }
+.moon-svg { fill: initial; stroke: none; display: block; }
+.sky-moon-name { font-size: 17px; }
+.sky-minis { display: flex; flex-direction: column; gap: 4px; margin-top: 8px; }
+.sky-mini { display: flex; gap: 8px; align-items: center; font-size: 12.5px; }
+.sky-mini strong { font-weight: 600; }
+.sky-mini small { display: block; }
+.sky-mini-ic { font-size: 16px; }
+.sky-h { font-size: 13.5px; margin-top: 4px; }
+.sky-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.sky-list li { display: flex; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 12px; background: var(--surface-2); font-size: 13px; }
+.sky-list small { display: block; }
+.sky-sub { color: var(--accent); }
+.sky-ev-ic { font-size: 20px; }
+.astro-top { display: flex; gap: 12px; align-items: flex-start; }
+.astro-glyph { flex: none; width: 58px; height: 58px; display: grid; place-items: center; font-size: 34px; border-radius: 16px; color: #fff; background: radial-gradient(circle at 30% 25%, #9b8cff, #4b3bb5); box-shadow: 0 6px 18px rgb(91 72 220 / 0.35); }
+.astro-name { font-size: 17px; }
+.astro-pick { width: auto !important; max-width: 140px; font-size: 12.5px; padding: 4px 8px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface-2); color: var(--text); }
+.astro-lines { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; font-size: 13.5px; line-height: 1.75; }
+.astro-lines li { display: flex; gap: 8px; }
+.astro-luck { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; font-size: 13px; padding: 8px 10px; border-radius: 12px; background: var(--surface-2); }
+.astro-swatch { display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: -1px; margin-inline-end: 4px; border: 1px solid var(--border); }
+.astro-years { display: flex; flex-direction: column; gap: 3px; font-size: 13px; }
+
+/* ---------- voice changer ---------- */
+.fun-voice { display: flex; flex-direction: column; gap: 10px; }
+.vc-rec { flex: none; width: 76px; height: 76px; border-radius: 50%; border: 0; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #fff; font-size: 11.5px; background: radial-gradient(circle at 35% 30%, #ff7a7f, #d93a40); box-shadow: 0 8px 20px rgb(229 72 77 / 0.35); transition: transform 0.15s; }
+.vc-rec:hover { transform: scale(1.05); }
+.vc-dot { width: 18px; height: 18px; border-radius: 50%; background: #fff; }
+.vc-rec.on { animation: vc-pulse 1.2s ease-in-out infinite; }
+.vc-rec.on .vc-dot { border-radius: 4px; }
+@keyframes vc-pulse { 50% { box-shadow: 0 0 0 12px rgb(229 72 77 / 0.15); } }
+.vc-status { display: block; line-height: 1.7; }
+.vc-file { cursor: pointer; border: 0; }
+.vc-wave { width: 100%; height: 70px; border-radius: 12px; background: var(--surface-2); }
+.vc-fx { display: grid; grid-template-columns: repeat(auto-fill, minmax(86px, 1fr)); gap: 6px; }
+.vc-chip { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 4px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface-2); color: var(--text); cursor: pointer; font-size: 12px; transition: transform 0.12s, border-color 0.12s; }
+.vc-chip:not(:disabled):hover { transform: translateY(-2px); border-color: var(--accent); }
+.vc-chip:disabled { opacity: 0.45; cursor: default; }
+.vc-chip.on { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 16%, var(--surface)); }
+.vc-ic { font-size: 22px; }
+
+/* ---------- camera background ---------- */
+.cam-bg { filter: var(--cam-filter, none) brightness(calc(1 - var(--wall-dim, .35))); transform: scale(1.06); }
+.cam-bg.mirror { transform: scale(1.06) scaleX(-1); }
+.cam-ctl { display: flex; flex-direction: column; gap: 8px; }
+.cam-ctl.off .cam-opts { opacity: 0.55; }
+.cam-opts select { width: auto !important; padding: 4px 8px !important; }
+.fun-cam { display: flex; flex-direction: column; gap: 10px; }
