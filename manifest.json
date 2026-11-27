@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Rubi | Your All-in-One Smart Assistant",
   "short_name": "Rubi",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "Calendar, tasks, notes and shortcuts in your new tab, saved in your own Google account. No ads, no tracking.",
   "icons": {
     "16": "icons/icon-16.png",
@@ -51,7 +51,7 @@
     "https://www.thesportsdb.com/*"
   ],
   "oauth2": {
-    "client_id": "PASTE_YOUR_CLIENT_ID.apps.googleusercontent.com",
+    "client_id": "276317454857-a0sqcg5mkbqg4sggrrm5nges4rrthu9o.apps.googleusercontent.com",
     "scopes": [
       "https://www.googleapis.com/auth/drive.appdata"
     ]

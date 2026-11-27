@@ -99,7 +99,7 @@
 4. در **Credentials → Create credentials → OAuth client ID** گزینه‌ی **Chrome Extension** را انتخاب کنید
    و Item ID را شناسه‌ی روبی در Chrome Web Store یعنی `ohpaebogaegajgcgeemadkdinfohpemp` بگذارید
    (برای نسخه‌ای که با Load unpacked نصب شده، شناسه‌ای است که در `chrome://extensions` زیر کارت روبی می‌بینید).
-5. Client ID ساخته‌شده را در `manifest.json` به جای `PASTE_YOUR_CLIENT_ID.apps.googleusercontent.com` بگذارید.
+5. Client ID ساخته‌شده را در `manifest.json` در `oauth2.client_id` بگذارید. (نسخه‌ی رسمی روبی Client ID خودش را دارد و فقط با شناسه‌ی فروشگاه کار می‌کند؛ اگر نسخه‌ی خودتان را می‌سازید، Client ID خودتان را بگذارید.)
 
 بعد از این کار، در تنظیمات هر نفر دو دکمه‌ی **اتصال به گوگل درایو** و **نمایش رویدادهای تقویم گوگل** ظاهر می‌شود.
 
